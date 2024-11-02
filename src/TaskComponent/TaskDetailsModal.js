@@ -3,11 +3,21 @@ import { Drawer, Button } from "rsuite";
 import "./TaskDetailsDrawer.css"; // Styling for the task details drawer
 
 const TaskDetailsDrawer = ({ isOpen, onRequestClose, task }) => {
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Detect screen resize to update mobile state
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <Drawer
       open={isOpen}
       onClose={onRequestClose}
-      size="lg"
+      size={isMobile? "full":"lg"}
       placement="right"
       className="custom-task-drawer"
     >

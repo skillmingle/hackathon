@@ -17,6 +17,15 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
   const { user } = useContext(ContextApi); // Get the logged-in user
   const { name, teamId, id } = user;
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Detect screen resize to update mobile state
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleCheckboxChange = (userId) => {
     setResource((prevResource) =>
       prevResource.includes(userId)
@@ -81,7 +90,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
   };
 
   return (
-    <Drawer open={isOpen} onClose={onRequestClose} size="lg" placement="right">
+    <Drawer open={isOpen} onClose={onRequestClose} size={isMobile? "full":"lg"} placement="right">
       <Drawer.Header className="drawer-header">
         <Drawer.Title>Edit Task</Drawer.Title>
         <Drawer.Actions>

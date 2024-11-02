@@ -17,6 +17,15 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
   const { user } = useContext(ContextApi); // Get the logged-in user
   const { name, teamId, id } = user;
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Detect screen resize to update mobile state
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [teamMembers, setTeamMembers] = useState([]);
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -82,11 +91,13 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
     }
   };
 
+  
+
   return (
     <Drawer
       open={isOpen}
       onClose={onRequestClose}
-      size="lg" // Adjust size as needed (sm, md, lg, full)
+      size={isMobile? "full":"lg"} // Adjust size as needed (sm, md, lg, full)
       placement="right"
     >
       <Drawer.Header>
