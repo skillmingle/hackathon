@@ -21,7 +21,7 @@ const CreateTask = ({onTaskCreated }) => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/teams/${teamId}`);
+        const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}`);
         const data = await response.json();
         if (data.success) {
           setTeamMembers(data.team.members);
@@ -57,7 +57,7 @@ const CreateTask = ({onTaskCreated }) => {
     };
     
     try {
-      const response = await fetch(`http://localhost:5000/api/teams/${teamId}/tasks`, {
+      const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/tasks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

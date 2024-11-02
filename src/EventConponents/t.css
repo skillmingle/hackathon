@@ -91,3 +91,23 @@
   min-height: 580px;
   overflow-y: auto; /* Enable scrolling if content exceeds height */
 }
+
+
+/* Adjusts the width of the resource column */
+.mds-progress-calendar .mbsc-scheduler-resources {
+  width: 800px; /* Set your desired width */
+}
+
+/* Adjust width for the first column in the Mobiscroll calendar */
+.custom-calendar .mbsc-scheduler-timeline > div:first-child {
+  width: 800px !important; /* Adjust width as needed */
+  min-width: 800px !important;
+  max-width: 800px !important;
+}
+
+/* Targeting resource columns in Mobiscroll Timeline */
+.custom-calendar .mbsc-timeline-resources-column {
+  width: 800px; /* Adjust width as needed */
+  min-width: 800px;
+  max-width: 800px;
+}

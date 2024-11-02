@@ -147,7 +147,7 @@ const TeamDashboard = () => {
     <div className="container-fluid team-dashboard-container">
       <Navbar teamName={team.teamName} activeKey={status} />
       <div className="row" style={{marginTop:'50px'}}>
-        {isMobile && <div className="col-2">
+        {!isMobile &&<div className="col-2">
           <Sidebar activeKey={activeKey} onSelect={handleTabSwitch} />
         </div>}
         <div className="col-12 col-sm-10">

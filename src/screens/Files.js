@@ -24,7 +24,7 @@ function DriveUploader() {
     // Function to fetch the accessToken
     const fetchAccessToken = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/admin/accessToken");
+        const response = await axios.get("https://h2h-backend-7ots.onrender.com/api/admin/accessToken");
         if (response.data.success) {
           setAccessToken(response.data.accessToken);
         } else {
@@ -78,7 +78,7 @@ function DriveUploader() {
         setFiles((prevFiles) => prevFiles.filter((file) => file.id !== fileId));
         
         // Log deletion activity
-        await fetch(`http://localhost:5000/api/activity-log`, {
+        await fetch(`https://h2h-backend-7ots.onrender.com/api/activity-log`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ function DriveUploader() {
         
         // Log upload activity
         const data = await response.json();
-        await fetch(`http://localhost:5000/api/activity-log`, {
+        await fetch(`https://h2h-backend-7ots.onrender.com/api/activity-log`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

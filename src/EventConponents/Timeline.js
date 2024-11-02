@@ -56,7 +56,7 @@ import ContextApi from '../ContextAPI/ContextApi';
     // Fetch team members as resources
     const fetchResources = useCallback(async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/teams/${teamId}/members`);
+        const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/members`);
         const data = await response.json();
         if (data.success) {
           setMyResources(data.resources); // Set resources for Mobiscroll
@@ -70,7 +70,7 @@ import ContextApi from '../ContextAPI/ContextApi';
 // Fetch tasks for the timeline
 const fetchTasks = useCallback(async () => {
   try {
-    const response = await fetch(`http://localhost:5000/api/teams/${teamId}/tasks`);
+    const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/tasks`);
     const data = await response.json();
     if (data.success) {
       console.log("Fetched Tasks:", data.tasks);
@@ -184,6 +184,8 @@ const fetchTasks = useCallback(async () => {
       ),
       [],
     );
+
+    
   
     return (
       <div style={{marginBottom:'100px', marginTop:'20px'}}>

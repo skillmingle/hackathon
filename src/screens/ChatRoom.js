@@ -26,7 +26,7 @@ const ChatRoom = ({ teamId, user }) => {
   // Fetch messages for the team
   const fetchMessages = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/chat/${teamId}`);
+      const response = await axios.get(`https://h2h-backend-7ots.onrender.com/api/chat/${teamId}`);
       if (response.data.success) {
         setMessages(response.data.messages);
       }
@@ -50,7 +50,7 @@ const ChatRoom = ({ teamId, user }) => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/chat", newMessage);
+      const response = await axios.post("https://h2h-backend-7ots.onrender.com/api/chat", newMessage);
       if (response.data.success) {
         setMessages((prev) => [...prev, response.data.message]);
         setMessageText("");

@@ -23,7 +23,7 @@ const CreateEvent = ({ onEventCreated }) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/api/teams/${teamId}/events`, {
+      const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/events`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

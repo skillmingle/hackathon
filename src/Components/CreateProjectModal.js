@@ -15,7 +15,7 @@ const CreateProjectForm = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:5000/api/create-project', {
+      const res = await fetch('https://h2h-backend-7ots.onrender.com/api/create-project', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

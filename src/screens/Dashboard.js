@@ -32,7 +32,7 @@ export default function Dashboard({ team, tasks }) {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/teams/${team._id}/notices`);
+        const response = await axios.get(`https://h2h-backend-7ots.onrender.com/api/teams/${team._id}/notices`);
         if (response.data.success) {
           setNotices(response.data.notices);
         }
@@ -46,7 +46,7 @@ export default function Dashboard({ team, tasks }) {
   const fetchActivityLogs = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/teams/${team._id}/activityLogs`
+        `https://h2h-backend-7ots.onrender.com/api/teams/${team._id}/activityLogs`
       );
       const data = await response.json();
       if (data.success) {
@@ -68,7 +68,7 @@ export default function Dashboard({ team, tasks }) {
   const fetchEvents = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/teams/${team._id}/timelines`
+        `https://h2h-backend-7ots.onrender.com/api/teams/${team._id}/timelines`
       );
       const data = await response.json();
       if (data.success) {

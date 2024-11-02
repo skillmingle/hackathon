@@ -38,7 +38,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/teams/${teamId}`);
+        const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}`);
         const data = await response.json();
         if (data.success) {
           setTeamMembers(data.team.members);
@@ -68,7 +68,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5000/api/tasks/edit/${task._id}`, {
+      const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/tasks/edit/${task._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

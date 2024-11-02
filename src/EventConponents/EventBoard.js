@@ -111,7 +111,7 @@ function App() {
 
   const fetchEvents = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/teams/${teamId}/events`);
+      const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/events`);
       const data = await response.json();
       if (data.success) {
         setMyEvents(data.events);
@@ -144,13 +144,13 @@ function App() {
 
     try {
       if (isEdit) {
-        await fetch(`http://localhost:5000/api/events/${tempEvent._id}`, {
+        await fetch(`https://h2h-backend-7ots.onrender.com/api/events/${tempEvent._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newEvent),
         });
       } else {
-        const response = await fetch(`http://localhost:5000/api/teams/${teamId}/events`, {
+        const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/events`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newEvent),
@@ -170,7 +170,7 @@ function App() {
   const deleteEvent = useCallback(
     async (event) => {
       try {
-        await fetch(`http://localhost:5000/api/events/${event._id}`, {
+        await fetch(`https://h2h-backend-7ots.onrender.com/api/events/${event._id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json"
