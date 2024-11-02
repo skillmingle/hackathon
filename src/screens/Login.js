@@ -16,7 +16,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/login/client', {
+      const res = await fetch('https://h2h-backend-7ots.onrender.com/api/login/client', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

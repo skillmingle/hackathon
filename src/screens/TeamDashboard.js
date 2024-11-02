@@ -60,7 +60,7 @@ const TeamDashboard = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/teams/${user.teamId}/tasks`);
+      const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${user.teamId}/tasks`);
       const data = await response.json();
       if (data.success) {
         setTasks(data.tasks);
@@ -84,7 +84,7 @@ const TeamDashboard = () => {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/teams/${user.teamId}`);
+        const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${user.teamId}`);
         const data = await response.json();
 
         if (data.success) {
