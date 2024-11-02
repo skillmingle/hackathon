@@ -1,0 +1,74 @@
+/* NoticeBoard.css */
+
+.notice-board {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f4f4f8;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .notice-board-title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .notice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .notice-item {
+    background: #fff;
+    border-left: 6px solid #3e98c7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .metrics-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .activity-item {
+    background: #fff;
+    padding: 20px;
+    border-left: 6px solid #da3232;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .notice-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .notice-title {
+    font-size: 20px;
+    color: #3e98c7;
+    margin-bottom: 5px;
+  }
+  
+  .notice-date {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+  }
+  
+  .notice-description {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+  }
+  

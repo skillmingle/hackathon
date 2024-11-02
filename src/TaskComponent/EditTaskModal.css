@@ -1,0 +1,144 @@
+/* EditTaskModal.css */
+
+/* Background gradient animation */
+
+
+/* Gradient Animation */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Drawer styling */
+.color-box {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rs-drawer {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  animation: drawerSlideIn 0.5s ease-out;
+}
+
+.rs-drawer-header {
+  background: #1a73e8;
+  color: #ffffff;
+  padding: 20px;
+  font-size: 1.8em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.rs-drawer-body {
+  padding: 30px;
+  background-color: #f4f6f8;
+}
+
+/* Form Styling */
+form input[type="text"],
+form textarea,
+form select,
+form input[type="datetime-local"],
+form input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin: 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+  background: #ffffff;
+  box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form textarea:focus,
+form select:focus,
+form input[type="color"]:focus,
+form input[type="datetime-local"]:focus,
+form input[type="number"]:focus {
+  box-shadow: 0px 0px 8px rgba(0, 100, 255, 0.5);
+}
+
+form textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+/* Button styling */
+.rs-drawer-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 30px;
+  background-color: #f4f6f8;
+}
+
+.rs-button-primary {
+  background: #1a73e8;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.rs-button-primary:hover {
+  background: #2a82f7;
+}
+
+.rs-button-subtle {
+  background: #f4f6f8;
+  color: #1a73e8;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+}
+
+.rs-button-subtle:hover {
+  background: #e0e7ff;
+  color: #2a82f7;
+}
+
+/* Tags styling */
+label {
+  font-weight: bold;
+  color: #333;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+h4 {
+  margin-top: 20px;
+  color: #1a73e8;
+}
+
+/* Animation for Drawer */
+@keyframes drawerSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Checkbox labels */
+label input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+label span {
+  font-size: 1em;
+  color: #444;
+}

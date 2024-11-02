@@ -1,0 +1,82 @@
+/* TaskCard.css */
+
+.task-card {
+    width: 100%;
+    max-width: 300px;
+    margin: 8px auto;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    /* border-left: 6px solid #1e3a8a; */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+    cursor: pointer;
+    line-height: 0.8;
+  }
+  
+  .task-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  .heading {
+    color: #333333;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+  }
+  
+  .description {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 10px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .due-date small {
+    font-size: 0.9em;
+    color: #333333;
+  }
+
+  
+  .subtitle {
+    font-weight: bold;
+    color: #333333;
+  }
+  
+  .assigned-to {
+    color: #333333;
+    margin-top: 8px;
+  }
+  
+  .assigned-names {
+    font-size: 0.95em;
+    color: #555555;
+  }
+  
+  /* Button group with icons */
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+  
+  .task-icon {
+    font-size: 1.2em;
+    color: #1e3a8a;
+    margin: 0 6px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .task-icon:hover {
+    color: #1e40af;
+    transform: scale(1.1);
+  }
+  
