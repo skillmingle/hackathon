@@ -3,11 +3,11 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Grid, Box, Button, TextField } from "@mui/material";
-import Divider from "@mui/material/Divider";
+// import Divider from "@mui/material/Divider";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import TaskCard from "./TaskCard";
-import CreateTask from "../Components/CreateTask"; // Import CreateTask component
+// import CreateTask from "../Components/CreateTask"; // Import CreateTask component
 import ContextApi from '../ContextAPI/ContextApi';
 import EditTaskForm from "./EditTaskForm";
 import CreateTaskForm from "./CreateTaskForm";
@@ -248,7 +248,6 @@ const fetchTasks = async () => {
                         </Grid>
                       </Grid>
                     </Box>
-                    <Divider />
                     
                     {column.items.map((item, index) => (
                       <TaskCard key={item._id} item={item} index={index} onEdit={() => handleEdit(item)} onClick={() => handleTaskClick(item)} onDeleteTask={() => handleDeleteTask(item._id,item.title)}/>
