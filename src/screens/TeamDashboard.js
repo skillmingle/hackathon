@@ -19,7 +19,14 @@ const TeamDashboard = () => {
   const {component}=useParams();
   const location = useLocation(); // Access the current URL path
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+  // Detect screen resize to update mobile state
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   
   
   const [team, setTeam] = useState(null);
@@ -140,10 +147,10 @@ const TeamDashboard = () => {
     <div className="container-fluid team-dashboard-container">
       <Navbar teamName={team.teamName} activeKey={status} />
       <div className="row" style={{marginTop:'50px'}}>
-        <div className="col-2">
+        {isMobile && <div className="col-2">
           <Sidebar activeKey={activeKey} onSelect={handleTabSwitch} />
-        </div>
-        <div className="col-10">
+        </div>}
+        <div className="col-12 col-sm-10">
           {activeKey === '1' && <Dashboard team={team} tasks={tasks}/>}
           {activeKey === '2' && <Files />}
           {activeKey === '3' && tasks && <KanBan task={tasks} />}

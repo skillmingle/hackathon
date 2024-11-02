@@ -12,6 +12,17 @@ const ChatRoom = ({ teamId, user }) => {
   const [file, setFile] = useState(null);
   const [replyTo, setReplyTo] = useState(null);
 
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Detect screen resize to update mobile state
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   // Fetch messages for the team
   const fetchMessages = async () => {
     try {
@@ -84,8 +95,8 @@ const ChatRoom = ({ teamId, user }) => {
   
   return (
     <div style={{ padding: 20, margin: "auto" }}>
-      <h3>Team Chat</h3>
-      <div style={{ height: 400, overflowY: "scroll", marginBottom: 10 }}>
+      {!isMobile && <h3>Team Chat</h3>}
+      <div style={isMobile? {margin: "auto", height:'70vh',overflowY: "scroll", marginBottom: 10}:{ height: 400, overflowY: "scroll", marginBottom: 10 }}>
         {messages.map((msg) => (
           <div key={msg._id}>
             <MessageBox

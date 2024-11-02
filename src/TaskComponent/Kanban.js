@@ -220,9 +220,15 @@ const fetchTasks = async () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Container>
+        <div className="row">
+
         {columns && (
+          <div className="row">
+
           <TaskColumnStyles>
             {Object.entries(columns).map(([columnId, column], index) => (
+              <div className="col-12 col-sm-3">
+
               <Droppable key={index} droppableId={columnId}>
                 {(provided, snapshot) => (
                   <TaskList
@@ -243,7 +249,7 @@ const fetchTasks = async () => {
                       </Grid>
                     </Box>
                     <Divider />
-
+                    
                     {column.items.map((item, index) => (
                       <TaskCard key={item._id} item={item} index={index} onEdit={() => handleEdit(item)} onClick={() => handleTaskClick(item)} onDeleteTask={() => handleDeleteTask(item._id,item.title)}/>
                     ))}
@@ -261,39 +267,42 @@ const fetchTasks = async () => {
                   </TaskList>
                 )}
               </Droppable>
+            </div>
             ))}
           </TaskColumnStyles>
+            </div>
         )}
-      </Container>
+        </div>
+        </Container>
       {isCreateModalOpen && (
         <CreateTaskForm
-          isOpen={isCreateModalOpen}
-          onRequestClose={() => setIsCreateModalOpen(false)}
-          teamId={teamId}
-          onTaskCreated={onTaskCreated}
+        isOpen={isCreateModalOpen}
+        onRequestClose={() => setIsCreateModalOpen(false)}
+        teamId={teamId}
+        onTaskCreated={onTaskCreated}
         />
       )}
-
+      
       {/* Render EditTaskForm inside a modal if isEditModalOpen is true */}
       {isEditModalOpen && selectedTask && (
         <EditTaskForm
-          isOpen={isEditModalOpen}
-          onRequestClose={() => setIsEditModalOpen(false)}
-          task={selectedTask}
-          onUpdate={onUpdate}
+        isOpen={isEditModalOpen}
+        onRequestClose={() => setIsEditModalOpen(false)}
+        task={selectedTask}
+        onUpdate={onUpdate}
         />
       )}
-
+      
       {/* Render TaskDetailsModal if a task is selected */}
       {selectedTask && (
         <TaskDetailsModal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          task={selectedTask}
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        task={selectedTask}
         />
       )}
-    </DragDropContext>
-  );
+      </DragDropContext>
+    );
 };
 
 export default Kanban;

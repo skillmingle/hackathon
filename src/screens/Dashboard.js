@@ -20,6 +20,15 @@ export default function Dashboard({ team, tasks }) {
 
   const [notices, setNotices] = useState([]);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Detect screen resize to update mobile state
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const fetchNotices = async () => {
       try {
@@ -190,8 +199,8 @@ export default function Dashboard({ team, tasks }) {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-8">
-          <div className="notice-board">
+        <div className="col-12 col-sm-8">
+          <div style={isMobile? {margin:0}:{}} className="notice-board">
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               <span
                 style={{ fontWeight: "bold" }}
@@ -199,12 +208,12 @@ export default function Dashboard({ team, tasks }) {
               >
                 Hack2Hire Notice Board
               </span>
-              <span
+              {!isMobile && <span
                 style={{ fontWeight: "bolder", color: "#3e98c7" }}
                 className="notice-board-title"
               >
                 Team Leader: {team.leaderUserId.name}
-              </span>
+              </span>}
             </div>
 
             <div className="notice-list">
@@ -219,7 +228,7 @@ export default function Dashboard({ team, tasks }) {
           </div>
 
           <div className="container text-center">
-            <h2 style={{ margin: "50px" }}>Team Members Stats</h2>
+            {isMobile? <h5 style={{ margin: "50px" }}>Team Members Stats</h5>:<h2 style={{ margin: "50px" }}>Team Members Stats</h2>}
             <div className="row">
               {team.members.map((member) => {
                 // Calculate filteredTaskCounts before returning JSX
@@ -231,9 +240,9 @@ export default function Dashboard({ team, tasks }) {
 
                 return (
                   <>
-                    <div key={member._id} className="col-6">
+                    <div key={member._id} style={isMobile?{display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column'}:{}} className="col-12 col-sm-6">
                       <h3 className="" style={{color:'#3e98c7'}}>
-                        {member.name} tiwari
+                        {member.name}
                       </h3>
 
                       <div
@@ -285,7 +294,7 @@ export default function Dashboard({ team, tasks }) {
               })}
             </div>
           </div>
-          <div className="notice-board">
+          {!isMobile &&<div className="notice-board">
             <h2 className="notice-board-title">Activity Logs (Last 5)</h2>
             <div className="notice-list">
               {logs.map((log, index) => (
@@ -297,10 +306,10 @@ export default function Dashboard({ team, tasks }) {
                 </div>
               ))}
             </div>
-          </div>
+          </div>}
         </div>
 
-        <div className="col-4">
+        <div className="col-12 col-sm-4">
           <div className="notice-board">
             <h2 className="notice-board-title">Team Metrics</h2>
             <div className="notice-list">
@@ -310,8 +319,8 @@ export default function Dashboard({ team, tasks }) {
                     maxValue={100}
                     value={teamHealthScore}
                     currentValueText={`Team Health Score: ${teamHealthScore}`}
-                    width={300}
-                    height={180}
+                    width={isMobile? 250:300}
+                    height={isMobile? 150:180}
                     forceRender
                     needleTransitionDuration={4000}
                     needleTransition="easeElastic"
