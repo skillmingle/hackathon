@@ -69,7 +69,7 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
     };
 
     try {
-      const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/tasks`, {
+      const response = await fetch(`http://localhost:5000/api/teams/${teamId}/tasks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -135,17 +135,8 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
             onChange={(e) => setTags(e.target.value)}
           />
 
-          <label>Progress</label>
-          <input
-            type="number"
-            min="0"
-            max="100"
-            value={progress}
-            onChange={(e) => setProgress(e.target.value)}
-          />
-
           <label>Color</label>
-          <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+          <input type="color" value={color} onChange={(e) => setColor(e.target.value)} /><br/>
 
           <label>Start Date</label>
           <input type="datetime-local" value={start} onChange={(e) => setStart(e.target.value)} required />

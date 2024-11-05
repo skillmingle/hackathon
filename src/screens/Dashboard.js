@@ -309,7 +309,16 @@ export default function Dashboard({ team, tasks }) {
           </div>}
         </div>
 
+
         <div className="col-12 col-sm-4">
+        <div className="notice-board">
+            <h2 className="notice-board-title">Your Mentors</h2>
+            <div className="notice-items">
+              Mentor 1 <br/>
+              Mentor 2
+            </div>
+          </div>
+          <br/>
           <div className="notice-board">
             <h2 className="notice-board-title">Team Metrics</h2>
             <div className="notice-list">

@@ -1,0 +1,56 @@
+/* CreateNoticeForm.css */
+
+.create-notice-form {
+    width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .create-notice-form h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .create-notice-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .create-notice-form input[type="text"],
+  .create-notice-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+  }
+  
+  .create-notice-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  
+  .create-notice-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .team-checkboxes {
+    margin-top: 15px;
+  }
+  .team-checkboxes h4 {
+    margin-bottom: 5px;
+    font-size: 1em;
+  }
+  

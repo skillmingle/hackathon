@@ -540,7 +540,7 @@ const Kanban = ({ task }) => {
                       </Box>
 
                       {column.items.map((item, index) => (
-                        <TaskCard key={item._id} item={item} index={index} onEdit={() => handleEdit(item)} onClick={() => handleTaskClick(item)} onDeleteTask={() => handleDeleteTask(item._id, item.title)} />
+                        <TaskCard key={item._id} item={item} index={index} onEdit={() => handleEdit(item)} onClick={() => handleTaskClick(item)} onDeleteTask={() => handleDeleteTask(item._id, item.title, item.assignedBy)} />
                       ))}
                       {provided.placeholder}
 

@@ -17,7 +17,8 @@ const TeamDashboard = () => {
 
   const { user } = useContext(ContextApi); // Get the logged-in user
   const {component}=useParams();
-  const location = useLocation(); // Access the current URL path
+const {teamId}=user
+
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -30,7 +31,6 @@ const TeamDashboard = () => {
   
   
   const [team, setTeam] = useState(null);
-  const [newMemberEmail, setNewMemberEmail] = useState(""); // For adding new members
   const [loading, setLoading] = useState(true);
   const [activeKey, setActiveKey] = useState('1');
   const [status, setstatus] = useState("Dashboard")
@@ -60,7 +60,7 @@ const TeamDashboard = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${user.teamId}/tasks`);
+      const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/tasks`);
       const data = await response.json();
       if (data.success) {
         setTasks(data.tasks);
@@ -72,7 +72,7 @@ const TeamDashboard = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, [user]);
+  }, [teamId]);
 
   const handleTaskCreated = (newTask) => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
@@ -84,7 +84,7 @@ const TeamDashboard = () => {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${user.teamId}`);
+        const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}`);
         const data = await response.json();
 
         if (data.success) {
@@ -98,7 +98,7 @@ const TeamDashboard = () => {
     };
 
     fetchTeam();
-  }, [user]);
+  }, [teamId]);
 
 
 

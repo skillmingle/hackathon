@@ -2,7 +2,6 @@
 
 /* Background animation for drawer */
 .custom-task-drawer .rs-drawer-header {
-    background: linear-gradient(135deg, #1a73e8, #42a5f5, #10b981, #fbbf24);
     background-size: 400% 400%;
     color: white;
     animation: gradientShift 8s ease infinite;
@@ -12,12 +11,7 @@
     font-weight: bold;
     border-bottom: 1px solid #e5e7eb;
   }
-  
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+
   
   /* Drawer body styling */
   .drawer-body {

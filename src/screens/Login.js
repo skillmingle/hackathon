@@ -28,7 +28,12 @@ const Login = () => {
         localStorage.setItem('userData', JSON.stringify(data.user));
         console.log(data);
         setuser(data.user);
-        navigate('/Team/Dashboard');
+        if(data.user.email=='sachin@gmail.com'||data.user.email=='sahil@gmail.com'){
+          navigate("/AdminH2HDashboard",);
+
+        }else{
+          navigate('/Team/Dashboard');
+        }
       } else {
         setError(data.message || 'Login failed');
       }

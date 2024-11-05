@@ -1,0 +1,101 @@
+.dashboard-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .create-project-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .create-project-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .create-project-form-container {
+    margin-top: 20px;
+  }
+  
+  .create-project-form-container h2 {
+    margin-bottom: 10px;
+  }
+  
+  .create-project-form-container input, 
+  .create-project-form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .create-project-form-container button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-project-form-container button:hover {
+    background-color: #218838;
+  }
+  
+  .create-project-form-container .error {
+    color: red;
+  }
+  
+  .create-project-form-container .success {
+    color: green;
+  }
+  
+
+
+
+  
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+  }
+  
+  .project-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .project-card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .project-card p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .view-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .view-btn:hover {
+    background-color: #0056b3;
+  }
+  
