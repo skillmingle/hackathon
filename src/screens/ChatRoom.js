@@ -118,9 +118,9 @@ const ChatRoom = ({ teamId, user }) => {
               text={msg.text}
               title={msg.senderName}
               date={new Date(msg.createdAt)}
-              onClick={() => setReplyTo(msg)}
+              // onClick={() => setReplyTo(msg)}
               // replyButton
-              removeButton
+              // removeButton
               // reply={msg.replyTo ? `Replying to: ${msg.replyTo.text}` : null}
             />
           </div>
