@@ -30,7 +30,7 @@ const AdminH2HDashboard = () => {
     const fetchProjects = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/user-projects`
+          `https://h2h-backend-7ots.onrender.com/api/user-projects`
         );
         const data = await response.json();
 
