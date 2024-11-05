@@ -12,12 +12,15 @@ import Dashboard from './Dashboard';
 import Sidebar from './Sidebar';
 import ActivityLog from './ActivityLog';
 import ChatRoom from './ChatRoom';
+import { toast, Toaster } from "react-hot-toast";
+import GridLoader from "react-spinners/GridLoader";
 
 const TeamDashboard = () => {
 
   const { user } = useContext(ContextApi); // Get the logged-in user
   const {component}=useParams();
 const {teamId}=user
+const [spinner, setspinner] = useState(false)
 
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -66,6 +69,7 @@ const {teamId}=user
         setTasks(data.tasks);
       }
     } catch (error) {
+      toast.error("Error fetching tasks")
       console.error("Error fetching tasks:", error);
     }
   };
@@ -92,6 +96,7 @@ const {teamId}=user
         }
         setLoading(false);
       } catch (error) {
+        toast.error("Error fetching team")
         console.error('Error fetching team:', error);
         setLoading(false);
       }
@@ -146,6 +151,7 @@ const {teamId}=user
   return (
     <div className="container-fluid team-dashboard-container">
       <Navbar teamName={team.teamName} activeKey={status} />
+      <Toaster toastOptions={{ duration: 4000 }} />
       <div className="row" style={{marginTop:'50px'}}>
         {isMobile? <div className="">
           <Sidebar activeKey={activeKey} onSelect={handleTabSwitch} />

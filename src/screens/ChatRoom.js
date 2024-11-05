@@ -3,6 +3,8 @@ import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { MessageBox, ChatList, Input } from "react-chat-elements";
 import "react-chat-elements/dist/main.css";
+import { toast, Toaster } from "react-hot-toast";
+import GridLoader from "react-spinners/GridLoader";
 
 const ChatRoom = ({ teamId, user }) => {
 
@@ -11,6 +13,7 @@ const ChatRoom = ({ teamId, user }) => {
   const [messageText, setMessageText] = useState("");
   const [file, setFile] = useState(null);
   const [replyTo, setReplyTo] = useState(null);
+  const [spinner, setspinner] = useState(false)
 
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -25,12 +28,16 @@ const ChatRoom = ({ teamId, user }) => {
 
   // Fetch messages for the team
   const fetchMessages = async () => {
+    setspinner(true)
     try {
       const response = await axios.get(`https://h2h-backend-7ots.onrender.com/api/chat/${teamId}`);
       if (response.data.success) {
+        setspinner(false)
         setMessages(response.data.messages);
       }
     } catch (error) {
+      setspinner(false)
+      toast.error('Error fetching messages')
       console.error("Error fetching messages:", error);
     }
   };
@@ -58,6 +65,7 @@ const ChatRoom = ({ teamId, user }) => {
         setReplyTo(null);
       }
     } catch (error) {
+      toast.error('Error sending messages')
       console.error("Error sending message:", error);
     }
   };
@@ -67,11 +75,13 @@ const ChatRoom = ({ teamId, user }) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetchMessages();
-    }, 15000); // 15 seconds
+    }, 30000); // 15 seconds
     
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, []);
   
+  
+
   
   
   
@@ -95,8 +105,10 @@ const ChatRoom = ({ teamId, user }) => {
   
   return (
     <div style={{ padding: 20, margin: "auto" }}>
+      <Toaster toastOptions={{ duration: 4000 }} />
+      {spinner &&<GridLoader color="#41a9be" />}
       {!isMobile && <h3>Team Chat</h3>}
-      <div style={isMobile? {margin: "auto", height:'70vh',overflowY: "scroll", marginBottom: 10}:{ height: 400, overflowY: "scroll", marginBottom: 10 }}>
+      <div style={isMobile? {margin: "auto", height:'65vh',overflowY: "scroll", marginBottom: 10}:{ height: 400, overflowY: "scroll", marginBottom: 10 }}>
         {messages.map((msg) => (
           <div key={msg._id}>
             <MessageBox
@@ -106,9 +118,9 @@ const ChatRoom = ({ teamId, user }) => {
               text={msg.text}
               title={msg.senderName}
               date={new Date(msg.createdAt)}
-              // onClick={() => setReplyTo(msg)}
+              onClick={() => setReplyTo(msg)}
               // replyButton
-              // removeButton
+              removeButton
               // reply={msg.replyTo ? `Replying to: ${msg.replyTo.text}` : null}
             />
           </div>

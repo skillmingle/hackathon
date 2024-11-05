@@ -5,6 +5,8 @@ import { FaFilePdf, FaImage, FaFileAlt, FaDownload, FaEye, FaTrash } from 'react
 import { Button } from 'rsuite';
 import ContextApi from '../ContextAPI/ContextApi';
 import axios from "axios";
+import { toast, Toaster } from "react-hot-toast";
+import GridLoader from "react-spinners/GridLoader";
 
 import '../css/Files.css';
 import leftIcon from "../images/h2h logo.jpg"; // Replace with your left icon image path
@@ -16,6 +18,7 @@ function DriveUploader() {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(null);
   const [accessToken, setAccessToken] = useState("");
+  const [spinner, setspinner] = useState(false)
 
   const { user } = useContext(ContextApi); // Get the logged-in user
     const {name,teamId,id} = user
@@ -32,7 +35,7 @@ function DriveUploader() {
         }
       } catch (error) {
         console.error("Error fetching access token:", error);
-        alert("An error occurred while fetching the access token.");
+        toast.error("An error occurred while fetching the access token.");
       }
     };
   
@@ -42,6 +45,7 @@ function DriveUploader() {
 
   const fetchFiles = useCallback(async () => {
     if (!accessToken) return;
+    setspinner(true)
     try {
       const response = await fetch(
         `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&fields=files(id,name,mimeType,modifiedTime,thumbnailLink,webViewLink,webContentLink)&key=${CLIENT_ID}`,
@@ -52,10 +56,11 @@ function DriveUploader() {
         }
       );
       const data = await response.json();
+      setspinner(false)
       setFiles(data.files || []);
     } catch (error) {
       console.error('Error fetching files:', error);
-      alert('Failed to load files.');
+      toast.error('Failed to load files.');
     }
   }, [accessToken]);
 
@@ -91,13 +96,13 @@ function DriveUploader() {
             description: `Deleted file with name: ${filename}`,
           }),
         });
-        alert('File deleted successfully!');
+        toast.success('File deleted successfully!');
       } else {
-        alert('Failed to delete file.');
+        toast.error('Failed to delete file.');
       }
     } catch (error) {
       console.error('Error deleting file:', error);
-      alert('An error occurred while deleting the file.');
+      toast.error('An error occurred while deleting the file.');
     }
   };
 
@@ -144,20 +149,21 @@ function DriveUploader() {
             description: `Uploaded file with name: ${file.name}`,
           }),
         });
-        alert('File uploaded successfully!');
+        toast.success('File uploaded successfully!');
         setFile(null);
         fetchFiles();
       } else {
-        alert('Failed to upload file.');
+        toast.error('Failed to upload file.');
       }
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('An error occurred during file upload.');
+      toast.error('An error occurred during file upload.');
     }
   };
 
   return (
     <div style={{ padding: '20px' }}>
+      <Toaster toastOptions={{ duration: 4000 }} />
       {!accessToken ? (
         <div></div>
       ) : (
@@ -170,6 +176,7 @@ function DriveUploader() {
 
           <div className="file-gallery">
             <h2 className="gallery-title">My Files</h2>
+            {spinner &&<GridLoader color="#41a9be" />}
             <div className="file-list">
               {files.map((file) => (
                 <div key={file.id} className="file-card">

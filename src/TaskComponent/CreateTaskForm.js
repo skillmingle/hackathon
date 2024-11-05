@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Drawer, Button } from "rsuite";
 import ContextApi from '../ContextAPI/ContextApi';
 import "./EditTaskModal.css"; // Optional: for additional styling
+import { toast, Toaster } from "react-hot-toast";
+import GridLoader from "react-spinners/GridLoader";
 
 const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
   const [title, setTitle] = useState("");
@@ -13,6 +15,7 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [resource, setResource] = useState([]);
+  const [spinner, setspinner] = useState(false)
 
   const { user } = useContext(ContextApi); // Get the logged-in user
   const { name, teamId, id } = user;
@@ -36,6 +39,7 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
           setTeamMembers(data.team.members);
         }
       } catch (error) {
+        toast.error("Error fetching team members")
         console.error("Error fetching team members:", error);
       }
     };
@@ -52,6 +56,8 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setspinner(true)
     const taskData = {
       title,
       description,
@@ -77,35 +83,38 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
         body: JSON.stringify(taskData),
       });
       const data = await response.json();
-
+      setspinner(false)
       if (data.success) {
-        alert("Task created successfully!");
+        toast.success("Task created successfully!");
         onTaskCreated(data.task); // Update task list in parent component
         onRequestClose(); // Close the drawer after task creation
       } else {
-        alert("Failed to create task.");
+        toast.error("Failed to create task.");
       }
     } catch (error) {
       console.error("Error creating task:", error);
-      alert("An error occurred while creating the task.");
+      toast.error("An error occurred while creating the task.");
     }
   };
 
   
 
   return (
+    <>
+    <Toaster toastOptions={{ duration: 4000 }} />
     <Drawer
       open={isOpen}
       onClose={onRequestClose}
       size={isMobile? "full":"lg"} // Adjust size as needed (sm, md, lg, full)
       placement="right"
-    >
+      >
       <Drawer.Header>
         <Drawer.Title>Create Task</Drawer.Title>
       <Drawer.Actions>
+      {spinner? <GridLoader color="#41a9be" size={10} />:
         <Button onClick={handleSubmit} appearance="primary">
           Create Task
-        </Button>
+        </Button>}
         <Button onClick={onRequestClose} appearance="subtle">
           Cancel
         </Button>
@@ -120,12 +129,12 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-          />
+            />
           <textarea
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-          />
+            />
 
           <label>Tags (comma separated)</label>
           <input
@@ -133,7 +142,7 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
             placeholder="Tags"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-          />
+            />
 
           <label>Color</label>
           <input type="color" value={color} onChange={(e) => setColor(e.target.value)} /><br/>
@@ -159,6 +168,7 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
       </Drawer.Body>
 
     </Drawer>
+          </>
   );
 };
 

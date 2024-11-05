@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Drawer, Button } from "rsuite";
 import "./EditTaskModal.css"; // Optional: for additional styling
 import ContextApi from '../ContextAPI/ContextApi';
+import { toast, Toaster } from "react-hot-toast";
+import GridLoader from "react-spinners/GridLoader";
 
 const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
   const [title, setTitle] = useState(task.title);
@@ -13,6 +15,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
   const [start, setStart] = useState(task.start);
   const [end, setEnd] = useState(task.end);
   const [resource, setResource] = useState(task.resource.map((r) => r._id));
+  const [spinner, setspinner] = useState(false)
 
   const { user } = useContext(ContextApi); // Get the logged-in user
   const { name, teamId, id } = user;
@@ -52,6 +55,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setspinner(true)
     const updatedTaskData = {
       title,
       description,
@@ -76,27 +80,31 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
         body: JSON.stringify(updatedTaskData),
       });
       const data = await response.json();
-
+      setspinner(false)
       if (data.success) {
+        toast.success("Task Updated")
         onUpdate(data.task); // Update the task list in parent component
         onRequestClose(); // Close the drawer
       } else {
-        alert("Failed to update task.");
+        toast.error("Failed to update task.");
       }
     } catch (error) {
       console.error("Error updating task:", error);
-      alert("An error occurred while updating the task.");
+      toast.error("An error occurred while updating the task.");
     }
   };
 
   return (
+    <>
+    <Toaster toastOptions={{ duration: 4000 }} />
     <Drawer open={isOpen} onClose={onRequestClose} size={isMobile? "full":"lg"} placement="right">
       <Drawer.Header className="drawer-header">
         <Drawer.Title>Edit Task</Drawer.Title>
         <Drawer.Actions>
+        {spinner? <GridLoader color="#41a9be" size={10}/>:
           <Button onClick={handleSubmit} appearance="primary">
             Update Task
-          </Button>
+          </Button>}
           <Button onClick={onRequestClose} appearance="subtle">
             Cancel
           </Button>
@@ -113,7 +121,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-          />
+            />
           <label>Description</label>
           <textarea
             placeholder="Description"
@@ -126,7 +134,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
             type="text"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-          />
+            />
 
           <label>Progress</label>
           <input
@@ -135,7 +143,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
             max="100"
             value={progress}
             onChange={(e) => setProgress(e.target.value)}
-          />
+            />
 
           <label>Color&nbsp;&nbsp;&nbsp;</label>
           <input className="color-box" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
@@ -146,7 +154,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
             value={new Date(start).toISOString().slice(0, -8)}
             onChange={(e) => setStart(e.target.value)}
             required
-          />
+            />
 
           <label>End Date</label>
           <input
@@ -154,7 +162,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
             value={new Date(end).toISOString().slice(0, -8)}
             onChange={(e) => setEnd(e.target.value)}
             required
-          />
+            />
 
           <h4>Assign to Team Members</h4>
           {teamMembers.map((member) => (
@@ -171,6 +179,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
       </Drawer.Body>
 
     </Drawer>
+                </>
   );
 };
 

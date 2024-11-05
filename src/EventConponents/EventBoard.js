@@ -14,6 +14,8 @@ import {
 } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState, useEffect, useContext } from 'react';
 import ContextApi from '../ContextAPI/ContextApi';
+import { toast, Toaster } from "react-hot-toast";
+import GridLoader from "react-spinners/GridLoader";
 
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import './e.css'
@@ -58,6 +60,7 @@ function App() {
   const [selectedColor, setSelectedColor] = useState('');
   const [tempColor, setTempColor] = useState('');
   const [isSnackbarOpen, setSnackbarOpen] = useState(false);
+  const [spinner, setspinner] = useState(false)
 
   const { user } = useContext(ContextApi); // Get the logged-in user
  const {name,teamId,id} = user
@@ -117,6 +120,7 @@ function App() {
         setMyEvents(data.events);
       }
     } catch (error) {
+      toast.error("Error in fetching events")
       console.error("Error fetching events:", error);
     }
   }, [teamId]);
@@ -141,6 +145,7 @@ function App() {
 
     };
 
+    setspinner(true)
 
     try {
       if (isEdit) {
@@ -149,6 +154,7 @@ function App() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newEvent),
         });
+        setspinner(false)
       } else {
         const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/events`, {
           method: "POST",
@@ -157,11 +163,14 @@ function App() {
         });
         const data = await response.json();
         if (data.success) {
+          setspinner(false)
           setMyEvents([...myEvents, data.event]);
+          toast.success("Event Created")
         }
       }
       setOpen(false);
     } catch (error) {
+      toast.error("Error in saving event")
       console.error("Error saving event:", error);
     }
   }, [isEdit, popupEventAllDay, popupEventDate, popupEventDescription, popupEventStatus, popupEventTitle, popupTravelTime, selectedColor, teamId, tempEvent]);
@@ -169,6 +178,7 @@ function App() {
 
   const deleteEvent = useCallback(
     async (event) => {
+      setspinner(true)
       try {
         await fetch(`https://h2h-backend-7ots.onrender.com/api/events/${event._id}`, {
           method: "DELETE",
@@ -184,7 +194,11 @@ function App() {
         setMyEvents(myEvents.filter((item) => item.id !== event.id));
         setUndoEvent(event);
         setSnackbarOpen(true);
+        setspinner(false)
+        toast.success("Event Deleted")
       } catch (error) {
+        setspinner(false)
+        toast.error("Failed to delete event")
         console.error("Error deleting event:", error);
       }
     },
@@ -361,9 +375,11 @@ function App() {
     },
     [selectColor, setSelectedColor],
   );
-
+// toast.success("applied succesfully")
+// toast.error("not retrieved");
   return (
     <>
+    <Toaster toastOptions={{ duration: 4000 }} />
       <Eventcalendar
         clickToCreate={true}
         dragToCreate={false}
@@ -441,6 +457,8 @@ function App() {
             </div>
           ) : null}
         </div>
+        {spinner &&<GridLoader color="#41a9be" size={8}/>}
+
       </Popup>
       <Popup
         display="bottom"
@@ -481,6 +499,7 @@ function App() {
             ) : null,
           )}
         </div>
+        {spinner &&<GridLoader color="#41a9be" size={8}/>}
       </Popup>
       <Snackbar isOpen={isSnackbarOpen} message="Event deleted" button={snackbarButton} onClose={handleSnackbarClose} />
     </>

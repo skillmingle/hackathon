@@ -6,6 +6,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ReactSpeedometer from "react-d3-speedometer";
 import "../css/dashboard.css";
+import { toast, Toaster } from "react-hot-toast";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -16,7 +17,7 @@ export default function Dashboard({ team, tasks }) {
   const [memberTaskCounts, setMemberTaskCounts] = useState({});
   const [teamTaskCounts, setTeamTaskCounts] = useState({});
   const [teamHealthScore, setTeamHealthScore] = useState(0);
-  const [logs, setLogs] = useState([]);
+  const [logs, setLogs] = useState(null);
 
   const [notices, setNotices] = useState([]);
 
@@ -37,6 +38,7 @@ export default function Dashboard({ team, tasks }) {
           setNotices(response.data.notices);
         }
       } catch (error) {
+        toast.error('Error fetching notices')
         console.error("Error fetching notices:", error);
       }
     };
@@ -56,7 +58,7 @@ export default function Dashboard({ team, tasks }) {
       }
     } catch (error) {
       console.error("Error fetching activity logs:", error);
-      alert("An error occurred while fetching activity logs.");
+      toast.error("An error occurred while fetching activity logs.");
     }
   };
 
@@ -75,6 +77,7 @@ export default function Dashboard({ team, tasks }) {
         setTimelines(data.timelines);
       }
     } catch (error) {
+      toast.error('Error fetching timelines')
       console.error("Error fetching events:", error);
     }
   }, [team]);
@@ -198,6 +201,7 @@ export default function Dashboard({ team, tasks }) {
 
   return (
     <div className="container-fluid">
+      <Toaster toastOptions={{ duration: 4000 }} />
       <div className="row">
         <div className="col-12 col-sm-8">
           <div style={isMobile? {margin:0}:{}} className="notice-board">
@@ -229,7 +233,7 @@ export default function Dashboard({ team, tasks }) {
 
           <div className="container text-center">
             {isMobile? <h5 style={{ margin: "50px" }}>Team Members Stats</h5>:<h2 style={{ margin: "50px" }}>Team Members Stats</h2>}
-            <div className="row">
+            {!memberProgress==NaN && !memberTaskCounts==NaN && <div className="row">
               {team.members.map((member) => {
                 // Calculate filteredTaskCounts before returning JSX
                 const filteredTaskCounts = Object.fromEntries(
@@ -292,9 +296,9 @@ export default function Dashboard({ team, tasks }) {
                   </>
                 );
               })}
-            </div>
+            </div>}
           </div>
-          {!isMobile &&<div className="notice-board">
+          {!isMobile && !logs==null &&<div className="notice-board">
             <h2 className="notice-board-title">Activity Logs (Last 5)</h2>
             <div className="notice-list">
               {logs.map((log, index) => (
@@ -313,7 +317,7 @@ export default function Dashboard({ team, tasks }) {
         <div className="col-12 col-sm-4">
         <div className="notice-board">
             <h2 className="notice-board-title">Your Mentors</h2>
-            <div className="notice-items">
+            <div className="notice-items text-center">
               Mentor 1 <br/>
               Mentor 2
             </div>
@@ -321,7 +325,7 @@ export default function Dashboard({ team, tasks }) {
           <br/>
           <div className="notice-board">
             <h2 className="notice-board-title">Team Metrics</h2>
-            <div className="notice-list">
+            {teamHealthScore && teamProgress && teamTaskCounts && <div className="notice-list">
               <div className="metrics-item text-center">
                 {teamHealthScore && (
                   <ReactSpeedometer
@@ -384,7 +388,7 @@ export default function Dashboard({ team, tasks }) {
                 />
                 <h3 className="notice-title">Overall Team Progress</h3>
               </div>
-            </div>
+            </div>}
           </div>
           <br />
           

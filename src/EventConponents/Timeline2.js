@@ -10,6 +10,8 @@ import { useCallback, useMemo, useRef, useState, useEffect, useContext } from 'r
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import "./t.css";
 import ContextApi from '../ContextAPI/ContextApi';
+import { toast, Toaster } from "react-hot-toast";
+import GridLoader from "react-spinners/GridLoader";
 
 setOptions({
   theme: 'ios',
@@ -29,19 +31,23 @@ function App() {
   const [popupEventResource, setResource] = useState('');
   const [popupEventProgress, setProgress] = useState(0);
   const [popupEventDescription, setDescription] = useState('');  // New state for description
+  const [spinner, setspinner] = useState(false)
 
   const { user } = useContext(ContextApi); // Get the logged-in user
   const { name, teamId, id } = user;
 
   // Fetch events for the timeline
   const fetchEvents = useCallback(async () => {
+    setspinner(true)
       try {
           const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/timelines`);
           const data = await response.json();
           if (data.success) {
+            setspinner(false)
               setMyEvents(data.timelines);
           }
       } catch (error) {
+        toast.error("Error fetching timeline")
           console.error("Error fetching events:", error);
       }
   }, [teamId]);
@@ -85,6 +91,7 @@ function App() {
 
       try {
           if (isEdit) {
+            toast.loading("Saving timeline")
               await fetch(`https://h2h-backend-7ots.onrender.com/api/timelines/${tempEvent._id}`, {
                   method: "PUT",
                   headers: { "Content-Type": "application/json" },
@@ -92,6 +99,7 @@ function App() {
               });
               setMyEvents((events) => events.map((evt) => (evt._id === tempEvent._id ? { ...evt, ...event } : evt)));
           } else {
+            toast.loading("Creating timeline")
               const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/timelines`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
@@ -100,10 +108,14 @@ function App() {
               const data = await response.json();
               if (data.success) {
                   setMyEvents((events) => [...events, data.timeline]);
+                  toast.success("Timeline created")
+
               }
           }
           setPopupOpen(false);
       } catch (error) {
+        toast.error("Error saving timeline")
+
           console.error("Error saving event:", error);
       }
   }, [isEdit, popupEventDate, popupEventProgress, popupEventResource, popupEventTitle, popupEventDescription, tempEvent, teamId]);
@@ -193,6 +205,8 @@ function App() {
 
   return (
       <div style={{ marginBottom: '100px' }}>
+        {spinner &&<GridLoader color="#41a9be"/>}
+        <Toaster toastOptions={{ duration: 4000 }} />
           <Eventcalendar
               class="mds-progress-calendar custom-calendar"
               view={myView}
@@ -274,6 +288,7 @@ function App() {
                       <span className="mds-popup-progress-label">{popupEventProgress}%</span>
                   </label>
               </div>
+              {spinner &&<GridLoader color="#41a9be" size={8}/>}
           </Popup>
       </div>
   );

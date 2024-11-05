@@ -9,6 +9,7 @@ import {
   import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import "./t.css";
 import ContextApi from '../ContextAPI/ContextApi';
+import GridLoader from "react-spinners/GridLoader";
 
 
   setOptions({
@@ -45,7 +46,8 @@ import ContextApi from '../ContextAPI/ContextApi';
     const [popupEventTitle, setTitle] = useState('');
     const [popupEventDate, setDate] = useState([]);
     const [popupEventProgress, setProgress] = useState(0);
-  
+    const [spinner, setspinner] = useState(false)
+
     const isDraggingProgress = useRef(false);
     const { user } = useContext(ContextApi); // Get the logged-in user
     const {name,teamId,id} = user
@@ -70,6 +72,7 @@ import ContextApi from '../ContextAPI/ContextApi';
 // Fetch tasks for the timeline
 const fetchTasks = useCallback(async () => {
   try {
+    setspinner(true)
     const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/tasks`);
     const data = await response.json();
     if (data.success) {
@@ -84,6 +87,7 @@ const fetchTasks = useCallback(async () => {
         progress: task.progress || 0,
         color: task.color,
       }));
+      setspinner(false)
       setMyEvents(formattedTasks);
     }
   } catch (error) {
@@ -189,6 +193,7 @@ const fetchTasks = useCallback(async () => {
   
     return (
       <div style={{marginBottom:'100px', marginTop:'20px'}}>
+        {spinner?<GridLoader color="#41a9be" />:
         <Eventcalendar
           class="mds-progress-calendar custom-calendar"
           view={myView}
@@ -202,7 +207,7 @@ const fetchTasks = useCallback(async () => {
           onEventClick={handleEventClick}
           renderResource={renderCustomResource}
           renderScheduleEvent={renderCustomEvent}
-        />
+        />}
         <Popup
           display="bottom"
           fullScreen={true}

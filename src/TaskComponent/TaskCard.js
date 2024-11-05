@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import "./TaskCard.css";
 import ContextApi from '../ContextAPI/ContextApi';
-import { toast, Toaster } from "react-hot-toast";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -14,10 +13,6 @@ const TaskCard = ({ item, index, onEdit, onClick, onDeleteTask }) => {
   const { user } = useContext(ContextApi);
   const { id} = user; // Get the user ID from context
 
-  // Function to check if the task is assigned by an admin
-  const isAdmin = () => {
-    return item.assignedBy._id === "6729ecd7e291eab9786439ed" || item.assignedBy._id === "672a0c8fae10ec7340b1b488";
-  };
 
   return (
     <Draggable key={item._id} draggableId={item._id} index={index}>
@@ -29,7 +24,6 @@ const TaskCard = ({ item, index, onEdit, onClick, onDeleteTask }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           // Apply background color if assigned by admin
-          style={{ backgroundColor: isAdmin() ? 'lightgreen' : 'white' }}
         >
           <div className="card-content">
             <div className="heading">{item.title}</div>
@@ -65,6 +59,4 @@ const TaskCard = ({ item, index, onEdit, onClick, onDeleteTask }) => {
 
 export default TaskCard;
 
-// toast.success("applied succesfully")
-// <Toaster toastOptions={{ duration: 4000 }} />
-//       toast.error("not retrieved");
+

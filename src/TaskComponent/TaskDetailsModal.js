@@ -49,6 +49,7 @@ const TaskDetailsDrawer = ({ isOpen, onRequestClose, task }) => {
           </div>
 
           <p><strong>Assigned To:</strong> {task.resource.map((user) => user.name).join(", ")}</p>
+          <p><strong>Assigned By:</strong> {task.assignedBy.name}</p>
         </div>
       </Drawer.Body>
       

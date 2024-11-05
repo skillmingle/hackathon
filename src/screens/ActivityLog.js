@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
+import GridLoader from "react-spinners/GridLoader";
 
 const ActivityLog = ({ teamId }) => {
   const [logs, setLogs] = useState([]);
   const team= teamId
 
+  const [spinner, setspinner] = useState(false)
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -20,22 +23,28 @@ const ActivityLog = ({ teamId }) => {
       const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${team}/activityLogs`);
       const data = await response.json();
       if (data.success) {
+        setspinner(false)
         setLogs(data.logs);
-      } else {
-        alert("Failed to fetch activity logs.");
+
       }
     } catch (error) {
+      setspinner(false)
+
       console.error("Error fetching activity logs:", error);
-      alert("An error occurred while fetching activity logs.");
+      toast.error("An error occurred while fetching activity logs.");
     }
   };
 
   useEffect(() => {
+    setspinner(true)
     fetchActivityLogs();
   }, [team]);
 
   return (
     <div>
+      <Toaster toastOptions={{ duration: 4000 }} />
+      {spinner &&<GridLoader color="#41a9be" />}
+
       <table class="table">
         <thead class="thead-light">
           <tr>
