@@ -15,15 +15,8 @@ const ChatRoom = ({ teamId, user }) => {
   const [replyTo, setReplyTo] = useState(null);
   const [spinner, setspinner] = useState(false)
 
-  const [isAdmin, setisAdmin] = useState(false)
   const [messageSeen, setmessageSeen] = useState(true)
 
-  useEffect(() => {
-    if(user.id=='6729ecd7e291eab9786439ed'|| user.id=='672a0c8fae10ec7340b1b488'){
-      setisAdmin(true)
-    }
-  }, [])
-  
 
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -69,7 +62,7 @@ const ChatRoom = ({ teamId, user }) => {
     try {
       const response = await axios.post("https://h2h-backend-7ots.onrender.com/api/chat", newMessage);
       if (response.data.success) {
-        isAdmin? updateMessageSeen(true):(messageSeen? updateMessageSeen(false):setmessageSeen(false))
+        (user.id=='6729ecd7e291eab9786439ed'|| user.id=='672a0c8fae10ec7340b1b488')? updateMessageSeen(true):(messageSeen? updateMessageSeen(false):setmessageSeen(false))
         setMessages((prev) => [...prev, response.data.message]);
         setMessageText("");
         setFile(null);
