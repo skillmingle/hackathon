@@ -233,7 +233,7 @@ export default function Dashboard({ team, tasks }) {
 
           <div className="container text-center">
             {isMobile? <h5 style={{ margin: "50px" }}>Team Members Stats</h5>:<h2 style={{ margin: "50px" }}>Team Members Stats</h2>}
-            {!memberProgress==NaN && !memberTaskCounts==NaN && <div className="row">
+            {memberProgress && memberTaskCounts && <div className="row">
               {team.members.map((member) => {
                 // Calculate filteredTaskCounts before returning JSX
                 const filteredTaskCounts = Object.fromEntries(
@@ -298,7 +298,7 @@ export default function Dashboard({ team, tasks }) {
               })}
             </div>}
           </div>
-          {!isMobile && !logs==null &&<div className="notice-board">
+          {!isMobile && logs &&<div className="notice-board">
             <h2 className="notice-board-title">Activity Logs (Last 5)</h2>
             <div className="notice-list">
               {logs.map((log, index) => (

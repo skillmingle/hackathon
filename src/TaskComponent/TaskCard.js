@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
 import { Draggable } from "react-beautiful-dnd";
 import "./TaskCard.css";
 import ContextApi from '../ContextAPI/ContextApi';
@@ -15,7 +15,7 @@ const TaskCard = ({ item, index, onEdit, onClick, onDeleteTask }) => {
 
 
   return (
-    <Draggable key={item._id} draggableId={item._id} index={index}>
+    <Draggable key={item._id} draggableId={item?._id} index={index}>
 
       {(provided) => (
         <div
@@ -43,7 +43,7 @@ const TaskCard = ({ item, index, onEdit, onClick, onDeleteTask }) => {
             <div className="button-group">
               <i className="fas fa-eye task-icon" onClick={onClick} title="View"></i>
               {/* Show edit and delete icons only if the task was assigned by the current user */}
-              {item.assignedBy._id === id && (
+              {item?.assignedBy?._id === id && (
                 <>
                   <i className="fas fa-edit task-icon" onClick={onEdit} title="Edit"></i>
                   <i className="fas fa-trash-alt task-icon" onClick={onDeleteTask} title="Delete"></i>

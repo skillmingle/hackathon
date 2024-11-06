@@ -1,20 +1,15 @@
-
-// src/components/KanbanBoard.js
+// src/components/Kanban.js
 import React, { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { Grid, Box, Button, TextField } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
+import { Grid, Box, Button } from "@mui/material";
 import axios from "axios";
 import TaskCard from "./TaskCard";
 import ContextApi from '../ContextAPI/ContextApi';
 import EditTaskForm from "./EditTaskForm";
 import CreateTaskForm from "./CreateTaskForm";
-import "./EditTaskModal.css"; // Optional: for additional styling
 import TaskDetailsModal from "./TaskDetailsModal";
 import { toast, Toaster } from "react-hot-toast";
-import GridLoader from "react-spinners/GridLoader";
-import { set } from "rsuite/esm/internals/utils/date";
 
 const Container = styled("div")(({ theme }) => ({
   display: "flex",
@@ -58,63 +53,58 @@ const Title = styled("span")(() => ({
   marginBottom: "3px",
 }));
 
-const Kanban = () => {
-  const [columns, setColumns] = useState();
-  const [showCreateTask, setShowCreateTask] = useState(false);
-  const [tasks, setTasks] = useState(null);
+const Kanban = ({ task }) => {
+  const [columns, setColumns] = useState({
+    "todo-column": { title: "To-Do", items: [] },
+    "inprogress-column": { title: "In Progress", items: [] },
+    "testing-column": { title: "Testing", items: [] },
+    "done-column": { title: "Done", items: [] },
+  });
+  const [tasks, setTasks] = useState([]);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { user } = useContext(ContextApi);
   const { name, teamId, id } = user;
-  const userId = id;
-  const [spinner, setspinner] = useState(false)
 
   const fetchTasks = async () => {
     try {
-      const taskColumns = {
-        "To-Do": [],
-        "In Progress": [],
-        "Testing": [],
-        "Done": [],
-      };
-
-      tasks?.forEach((task) => {
-        taskColumns[task.status].push(task);
-      });
-
-      setColumns({
-        [uuidv4()]: { title: "To-Do", items: taskColumns["To-Do"] },
-        [uuidv4()]: { title: "In Progress", items: taskColumns["In Progress"] },
-        [uuidv4()]: { title: "Testing", items: taskColumns["Testing"] },
-        [uuidv4()]: { title: "Done", items: taskColumns["Done"] },
-      });
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
-
-  const fetchx = async () => {
-    setspinner(true)
-    try {
       const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/tasks`);
       const data = await response.json();
-      setspinner(false)
       if (data.success) {
         setTasks(data.tasks);
       }
     } catch (error) {
-      toast.error("Error fetching taska")
+      toast.error("Error fetching tasks");
       console.error("Error fetching tasks:", error);
     }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchx(); // Fetch tasks first
-      fetchTasks(); // Then populate the columns based on fetched tasks
+    fetchTasks();
+  }, []);
+
+  useEffect(() => {
+    const taskColumns = {
+      "To-Do": [],
+      "In Progress": [],
+      "Testing": [],
+      "Done": [],
     };
-  
-    fetchData();
-  }, [tasks]); // Run this whenever tasks change
-  
+
+    tasks.forEach((task) => {
+      taskColumns[task.status].push(task);
+    });
+
+    setColumns({
+      "todo-column": { title: "To-Do", items: taskColumns["To-Do"] },
+      "inprogress-column": { title: "In Progress", items: taskColumns["In Progress"] },
+      "testing-column": { title: "Testing", items: taskColumns["Testing"] },
+      "done-column": { title: "Done", items: taskColumns["Done"] },
+    });
+  }, [tasks]);
 
   const onDragEnd = async (result) => {
     if (!result.destination) return;
@@ -126,47 +116,33 @@ const Kanban = () => {
       const sourceItems = [...sourceColumn.items];
       const destItems = [...destColumn.items];
       const [movedTask] = sourceItems.splice(source.index, 1);
-      movedTask.status = columns[destination.droppableId].title;
+      movedTask.status = destColumn.title;
       destItems.splice(destination.index, 0, movedTask);
 
       setColumns({
         ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems,
-        },
+        [source.droppableId]: { ...sourceColumn, items: sourceItems },
+        [destination.droppableId]: { ...destColumn, items: destItems },
       });
 
       try {
-        await axios.put(`https://h2h-backend-7ots.onrender.com/api/tasks/${draggableId}`, { status: movedTask.status, userId, name, teamId });
+        await axios.put(`https://h2h-backend-7ots.onrender.com/api/tasks/${draggableId}`, { status: movedTask.status, userId: id, name, teamId });
       } catch (error) {
         console.error("Error updating task status:", error);
       }
     }
   };
 
-  const handleDeleteTask = async (taskId, title) => {
+  const handleDeleteTask = async (taskId) => {
     try {
       const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/tasks/${taskId}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          teamId: teamId,
-          id: id,
-          name: name,
-          title: title
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ teamId, id, name }),
       });
       const data = await response.json();
-
       if (data.success) {
-        fetchx();
+        setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
         toast.success("Task deleted successfully.");
       } else {
         toast.error("Failed to delete task.");
@@ -176,11 +152,6 @@ const Kanban = () => {
       toast.error("An error occurred while deleting the task.");
     }
   };
-
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleTaskClick = (task) => {
     setSelectedTask(task);
@@ -205,50 +176,41 @@ const Kanban = () => {
   };
 
   const onTaskCreated = (newTask) => {
-    fetchx();
+    fetchTasks();
     setTasks((prevTasks) => [...prevTasks, newTask]);
     setIsCreateModalOpen(false);
   };
 
   return (
     <>
-    <Toaster toastOptions={{ duration: 4000 }} />
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Container>
-        {columns && tasks && (
+      <Toaster toastOptions={{ duration: 4000 }} />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Container>
           <Grid container spacing={2}>
-            {Object.entries(columns).map(([columnId, column], index) => (
+            {Object.entries(columns).map(([columnId, column]) => (
               <Grid item xs={12} sm={6} md={3} key={columnId}>
-                <Droppable key={index} droppableId={columnId}>
+                <Droppable droppableId={columnId}>
                   {(provided, snapshot) => (
                     <TaskList
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                       isDraggingOver={snapshot.isDraggingOver}
                       columnTitle={column.title}
-                      >
-                      <Box sx={{ width: "100%" }}>
-                        <Grid
-                          container
-                          rowSpacing={1}
-                          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                          >
-                          <Grid item xs={10} key={index}>
-                            <Title>{column.title}</Title>
-                          </Grid>
-                        </Grid>
-                      </Box>
-
+                    >
+                      <Title>{column.title}</Title>
                       {column.items.map((item, index) => (
-                        <TaskCard key={item._id} item={item} index={index} onEdit={() => handleEdit(item)} onClick={() => handleTaskClick(item)} onDeleteTask={() => handleDeleteTask(item._id, item.title, item.assignedBy)} />
+                        <TaskCard
+                          key={item._id}
+                          item={item}
+                          index={index}
+                          onEdit={() => handleEdit(item)}
+                          onClick={() => handleTaskClick(item)}
+                          onDeleteTask={() => handleDeleteTask(item._id)}
+                        />
                       ))}
                       {provided.placeholder}
-
                       {column.title === "To-Do" && (
-                        <Button
-                          variant="text"
-                          onClick={() => setIsCreateModalOpen(true)}
-                        >
+                        <Button variant="text" onClick={() => setIsCreateModalOpen(true)}>
                           + New Task
                         </Button>
                       )}
@@ -258,39 +220,36 @@ const Kanban = () => {
               </Grid>
             ))}
           </Grid>
-        )}
-      </Container>
+        </Container>
+      </DragDropContext>
 
       {isCreateModalOpen && (
         <CreateTaskForm
-        isOpen={isCreateModalOpen}
-        onRequestClose={() => setIsCreateModalOpen(false)}
-        teamId={teamId}
-        onTaskCreated={onTaskCreated}
+          isOpen={isCreateModalOpen}
+          onRequestClose={() => setIsCreateModalOpen(false)}
+          teamId={teamId}
+          onTaskCreated={onTaskCreated}
         />
       )}
 
       {isEditModalOpen && selectedTask && (
         <EditTaskForm
-        isOpen={isEditModalOpen}
-        onRequestClose={() => setIsEditModalOpen(false)}
-        task={selectedTask}
-        onUpdate={onUpdate}
+          isOpen={isEditModalOpen}
+          onRequestClose={() => setIsEditModalOpen(false)}
+          task={selectedTask}
+          onUpdate={onUpdate}
         />
       )}
 
       {selectedTask && (
         <TaskDetailsModal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        task={selectedTask}
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          task={selectedTask}
         />
       )}
-    </DragDropContext>
-      </>
+    </>
   );
 };
 
 export default Kanban;
-
-
