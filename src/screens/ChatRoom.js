@@ -15,6 +15,16 @@ const ChatRoom = ({ teamId, user }) => {
   const [replyTo, setReplyTo] = useState(null);
   const [spinner, setspinner] = useState(false)
 
+  const [isAdmin, setisAdmin] = useState(false)
+  const [messageSeen, setmessageSeen] = useState(true)
+
+  useEffect(() => {
+    if(user.id=='6729ecd7e291eab9786439ed'|| user.id=='672a0c8fae10ec7340b1b488'){
+      setisAdmin(true)
+    }
+  }, [])
+  
+
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -41,11 +51,11 @@ const ChatRoom = ({ teamId, user }) => {
       console.error("Error fetching messages:", error);
     }
   };
-
+  
   // Handle sending a message
   const sendMessage = async () => {
     if (!messageText.trim() && !file) return;
-
+    
     const newMessage = {
       teamId,
       senderId: user.id,
@@ -55,10 +65,11 @@ const ChatRoom = ({ teamId, user }) => {
       type: file ? (file.type.startsWith("image/") ? "image" : "file") : "text",
       fileUrl: file ? URL.createObjectURL(file) : null,
     };
-
+    
     try {
       const response = await axios.post("https://h2h-backend-7ots.onrender.com/api/chat", newMessage);
       if (response.data.success) {
+        isAdmin? updateMessageSeen(true):(messageSeen? updateMessageSeen(false):setmessageSeen(false))
         setMessages((prev) => [...prev, response.data.message]);
         setMessageText("");
         setFile(null);
@@ -71,6 +82,17 @@ const ChatRoom = ({ teamId, user }) => {
   };
 
   
+  // Function to update messageSeen status
+  const updateMessageSeen = async (messageSeen) => {
+    try {
+      await axios.put(`https://h2h-backend-7ots.onrender.com/api/team/${teamId}/message-seen`, { messageSeen });
+      setmessageSeen(messageSeen)
+    } catch (error) {
+      console.error("Error updating messageSeen:", error);
+    }
+  };
+
+
   
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -82,7 +104,34 @@ const ChatRoom = ({ teamId, user }) => {
   
   
 
-  
+    // Delete a message by ID
+    const deleteMessage = async (messageId) => {
+      try {
+        const response = await axios.delete(
+          `https://h2h-backend-7ots.onrender.com/api/chat/${teamId}/message/${messageId}`
+        );
+        if (response.data.success) {
+          toast.success('Message Deleted')
+          setMessages((prevMessages) =>
+            prevMessages.filter((message) => message._id !== messageId)
+          );
+        } else {
+          toast.error("Failed to delete message");
+        }
+      } catch (error) {
+        console.error("Error deleting message:", error);
+      }
+    };
+
+
+    const handleDelete=(senderId, messageId)=>{
+      console.log(user.id, senderId)
+      if(user.id==senderId){
+        deleteMessage(messageId)
+      }else{
+        toast.error('Only sender can delete')
+      }
+    }
   
   
   const messagesEndRef = useRef(null);
@@ -118,9 +167,9 @@ const ChatRoom = ({ teamId, user }) => {
               text={msg.text}
               title={msg.senderName}
               date={new Date(msg.createdAt)}
-              // onClick={() => setReplyTo(msg)}
+              onClick={() => handleDelete(msg.senderId._id,msg._id)}
               // replyButton
-              // removeButton
+              removeButton
               // reply={msg.replyTo ? `Replying to: ${msg.replyTo.text}` : null}
             />
           </div>

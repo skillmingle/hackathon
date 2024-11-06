@@ -167,6 +167,8 @@ const [clicked, setclicked] = useState(false)
             <div key={team._id} className="team-card">
               <h3>{team.teamName}</h3>
               <p>Team Leader: {team.leaderUserId}</p>
+
+              {team?.messageSeen?<></>:<p style={{fontWeight:700, fontSize:'20px', color:'red'}}>Action Required</p>}
               <button
                 className="view-team-btn"
                 onClick={() => handleViewTeam(team._id)}
