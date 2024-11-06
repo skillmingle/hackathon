@@ -106,8 +106,8 @@ const [clicked, setclicked] = useState(false)
 
       <h1>{project.projectName}</h1>
       <p>{project.description}</p>
-      {showCreateNoticeForm && <CreateNotice projectId={projectId} teams={teams}/>}
-      <button className="create-team-btn" onClick={handleNotice}>Send Notice</button>
+      {/* {showCreateNoticeForm && <CreateNotice projectId={projectId} teams={teams}/>}
+      <button className="create-team-btn" onClick={handleNotice}>Send Notice</button> */}
 
       {/* Create Team Button */}
       <button
