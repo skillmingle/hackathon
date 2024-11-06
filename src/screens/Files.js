@@ -106,6 +106,35 @@ function DriveUploader() {
     }
   };
 
+
+
+  const confirmDelete = (fileId,filename) => {
+    toast((t) => (
+      <span>
+        Are you sure you want to delete this file?
+        <div style={{ marginTop: '8px', display: 'flex', gap: '8px' }}>
+          <button
+            onClick={() => {
+              handleDelete(fileId,filename);
+              toast.dismiss(t.id); // Dismiss the toast after deletion
+            }}
+            style={{ background: 'red', color: 'white', padding: '4px 8px', borderRadius: '4px' }}
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            style={{ padding: '4px 8px', borderRadius: '4px' }}
+          >
+            Cancel
+          </button>
+        </div>
+      </span>
+    ));
+  };
+
+
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -198,7 +227,7 @@ function DriveUploader() {
                       <a href={file.webContentLink} target="_blank" rel="noopener noreferrer" download className="download-button">
                         <FaDownload /> Download
                       </a>
-                      <button onClick={() => handleDelete(file.id,file.name)} className="delete-button" style={{ color: 'red', cursor: 'pointer', background: 'none', border: 'none' }}>
+                      <button onClick={() => confirmDelete(file.id,file.name)} className="delete-button" style={{ color: 'red', cursor: 'pointer', background: 'none', border: 'none' }}>
                         <FaTrash /> 
                       </button>
                     </div>

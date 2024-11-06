@@ -133,12 +133,12 @@ const Kanban = ({ task }) => {
     }
   };
 
-  const handleDeleteTask = async (taskId) => {
+  const handleDeleteTask = async (taskId, title) => {
     try {
       const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/tasks/${taskId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teamId, id, name }),
+        body: JSON.stringify({ teamId, id, name, title }),
       });
       const data = await response.json();
       if (data.success) {
@@ -151,6 +151,32 @@ const Kanban = ({ task }) => {
       console.error("Error deleting task:", error);
       toast.error("An error occurred while deleting the task.");
     }
+  };
+
+
+  const confirmDelete = (taskId, title) => {
+    toast((t) => (
+      <span>
+        Are you sure you want to delete this task?
+        <div style={{ marginTop: '8px', display: 'flex', gap: '8px' }}>
+          <button
+            onClick={() => {
+              handleDeleteTask(taskId, title);
+              toast.dismiss(t.id); // Dismiss the toast after deletion
+            }}
+            style={{ background: 'red', color: 'white', padding: '4px 8px', borderRadius: '4px' }}
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            style={{ padding: '4px 8px', borderRadius: '4px' }}
+          >
+            Cancel
+          </button>
+        </div>
+      </span>
+    ));
   };
 
   const handleTaskClick = (task) => {
@@ -205,7 +231,7 @@ const Kanban = ({ task }) => {
                           index={index}
                           onEdit={() => handleEdit(item)}
                           onClick={() => handleTaskClick(item)}
-                          onDeleteTask={() => handleDeleteTask(item._id)}
+                          onDeleteTask={() => confirmDelete(item._id,item.title)}
                         />
                       ))}
                       {provided.placeholder}

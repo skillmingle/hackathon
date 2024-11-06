@@ -127,7 +127,28 @@ const ChatRoom = ({ teamId, user }) => {
     const handleDelete=(senderId, messageId)=>{
       console.log(user.id, senderId)
       if(user.id==senderId){
-        deleteMessage(messageId)
+        toast((t) => (
+          <span>
+            Delete Message?
+            <div style={{ marginTop: '8px', display: 'flex', gap: '8px' }}>
+              <button
+                onClick={() => {
+                  deleteMessage(messageId)
+                  toast.dismiss(t.id); // Dismiss the toast after deletion
+                }}
+                style={{ background: 'red', color: 'white', padding: '4px 8px', borderRadius: '4px' }}
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => toast.dismiss(t.id)}
+                style={{ padding: '4px 8px', borderRadius: '4px' }}
+              >
+                Cancel
+              </button>
+            </div>
+          </span>
+        ));
       }else{
         toast.error('Only sender can delete')
       }
@@ -154,7 +175,7 @@ const ChatRoom = ({ teamId, user }) => {
   
   return (
     <div style={{ padding: 20, margin: "auto" }}>
-      <Toaster toastOptions={{ duration: 4000 }} />
+      <Toaster toastOptions={{ duration: 5000 }} />
       {spinner &&<GridLoader color="#41a9be" />}
       {!isMobile && <h3>Team Chat</h3>}
       <div style={isMobile? {margin: "auto", height:'65vh',overflowY: "scroll", marginBottom: 10}:{ height: 400, overflowY: "scroll", marginBottom: 10 }}>
