@@ -40,7 +40,7 @@ const CreateEvent = ({ onEventCreated }) => {
         alert("Failed to create event");
       }
     } catch (error) {
-      console.error("Error creating event:", error);
+      //console.error("Error creating event:", error);
     }
   };
 

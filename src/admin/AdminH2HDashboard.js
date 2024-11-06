@@ -40,7 +40,7 @@ const AdminH2HDashboard = () => {
           setProjects(data.projects);
         }
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        //console.error("Error fetching projects:", error);
         setLoading(false);
       }
     };
@@ -50,7 +50,7 @@ const AdminH2HDashboard = () => {
 
   // Function to handle view project
   const handleViewProject = (projectId) => {
-    console.log(projectId);
+    //console.log(projectId);
 
     navigate(`/projects/${projectId}`);
   };

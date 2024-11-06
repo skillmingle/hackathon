@@ -27,7 +27,7 @@ const CreateTask = ({onTaskCreated }) => {
           setTeamMembers(data.team.members);
         }
       } catch (error) {
-        console.error("Error fetching team members:", error);
+        //console.error("Error fetching team members:", error);
       }
     };
     fetchTeamMembers()
@@ -72,7 +72,7 @@ const CreateTask = ({onTaskCreated }) => {
         alert("Failed to create task.");
       }
     } catch (error) {
-      console.error("Error creating task:", error);
+      //console.error("Error creating task:", error);
       alert("An error occurred while creating the task.");
     }
   };

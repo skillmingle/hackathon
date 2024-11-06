@@ -40,7 +40,7 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
         }
       } catch (error) {
         toast.error("Error fetching team members")
-        console.error("Error fetching team members:", error);
+        //console.error("Error fetching team members:", error);
       }
     };
     fetchTeamMembers();
@@ -92,7 +92,7 @@ const CreateTaskDrawer = ({ isOpen, onRequestClose, onTaskCreated }) => {
         toast.error("Failed to create task.");
       }
     } catch (error) {
-      console.error("Error creating task:", error);
+      //console.error("Error creating task:", error);
       toast.error("An error occurred while creating the task.");
     }
   };

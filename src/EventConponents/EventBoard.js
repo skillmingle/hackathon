@@ -121,7 +121,7 @@ function App() {
       }
     } catch (error) {
       toast.error("Error in fetching events")
-      console.error("Error fetching events:", error);
+      //console.error("Error fetching events:", error);
     }
   }, [teamId]);
   useEffect(() => {
@@ -171,7 +171,7 @@ function App() {
       setOpen(false);
     } catch (error) {
       toast.error("Error in saving event")
-      console.error("Error saving event:", error);
+      //console.error("Error saving event:", error);
     }
   }, [isEdit, popupEventAllDay, popupEventDate, popupEventDescription, popupEventStatus, popupEventTitle, popupTravelTime, selectedColor, teamId, tempEvent]);
   
@@ -199,7 +199,7 @@ function App() {
       } catch (error) {
         setspinner(false)
         toast.error("Failed to delete event")
-        console.error("Error deleting event:", error);
+        //console.error("Error deleting event:", error);
       }
     },
     [myEvents]

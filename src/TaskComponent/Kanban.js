@@ -78,7 +78,7 @@ const Kanban = ({ task }) => {
       }
     } catch (error) {
       toast.error("Error fetching tasks");
-      console.error("Error fetching tasks:", error);
+      //console.error("Error fetching tasks:", error);
     }
   };
 
@@ -128,7 +128,7 @@ const Kanban = ({ task }) => {
       try {
         await axios.put(`https://h2h-backend-7ots.onrender.com/api/tasks/${draggableId}`, { status: movedTask.status, userId: id, name, teamId });
       } catch (error) {
-        console.error("Error updating task status:", error);
+        //console.error("Error updating task status:", error);
       }
     }
   };
@@ -148,7 +148,7 @@ const Kanban = ({ task }) => {
         toast.error("Failed to delete task.");
       }
     } catch (error) {
-      console.error("Error deleting task:", error);
+      //console.error("Error deleting task:", error);
       toast.error("An error occurred while deleting the task.");
     }
   };

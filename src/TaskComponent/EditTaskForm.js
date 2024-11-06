@@ -47,7 +47,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
           setTeamMembers(data.team.members);
         }
       } catch (error) {
-        console.error("Error fetching team members:", error);
+        //console.error("Error fetching team members:", error);
       }
     };
     fetchTeamMembers();
@@ -89,7 +89,7 @@ const EditTaskDrawer = ({ isOpen, onRequestClose, task, onUpdate }) => {
         toast.error("Failed to update task.");
       }
     } catch (error) {
-      console.error("Error updating task:", error);
+      //console.error("Error updating task:", error);
       toast.error("An error occurred while updating the task.");
     }
   };

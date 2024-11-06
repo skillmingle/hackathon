@@ -31,7 +31,7 @@ const Login = () => {
       setspinner(false)
       if (data.success) {
         localStorage.setItem('userData', JSON.stringify(data.user));
-        console.log(data);
+        //console.log(data);
         setuser(data.user);
         if(data.user.email=='sachin@gmail.com'||data.user.email=='sahil@gmail.com'){
           navigate("/AdminH2HDashboard",);
@@ -44,7 +44,7 @@ const Login = () => {
         setError(data.message || 'Login failed');
       }
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       toast.error('Something went wrong. Please try again.')
       setError('Something went wrong. Please try again.');
     }

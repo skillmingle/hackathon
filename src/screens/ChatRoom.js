@@ -8,7 +8,7 @@ import GridLoader from "react-spinners/GridLoader";
 
 const ChatRoom = ({ teamId, user }) => {
 
-  console.log(user.id)
+  //console.log(user.id)
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
   const [file, setFile] = useState(null);
@@ -48,7 +48,7 @@ const ChatRoom = ({ teamId, user }) => {
     } catch (error) {
       setspinner(false)
       toast.error('Error fetching messages')
-      console.error("Error fetching messages:", error);
+      //console.error("Error fetching messages:", error);
     }
   };
   
@@ -77,7 +77,7 @@ const ChatRoom = ({ teamId, user }) => {
       }
     } catch (error) {
       toast.error('Error sending messages')
-      console.error("Error sending message:", error);
+      //console.error("Error sending message:", error);
     }
   };
 
@@ -88,7 +88,7 @@ const ChatRoom = ({ teamId, user }) => {
       await axios.put(`https://h2h-backend-7ots.onrender.com/api/team/${teamId}/message-seen`, { messageSeen });
       setmessageSeen(messageSeen)
     } catch (error) {
-      console.error("Error updating messageSeen:", error);
+      //console.error("Error updating messageSeen:", error);
     }
   };
 
@@ -119,13 +119,13 @@ const ChatRoom = ({ teamId, user }) => {
           toast.error("Failed to delete message");
         }
       } catch (error) {
-        console.error("Error deleting message:", error);
+        //console.error("Error deleting message:", error);
       }
     };
 
 
     const handleDelete=(senderId, messageId)=>{
-      console.log(user.id, senderId)
+      //console.log(user.id, senderId)
       if(user.id==senderId){
         toast((t) => (
           <span>

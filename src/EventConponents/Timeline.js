@@ -64,7 +64,7 @@ import GridLoader from "react-spinners/GridLoader";
           setMyResources(data.resources); // Set resources for Mobiscroll
         }
       } catch (error) {
-        console.error("Error fetching team members:", error);
+        //console.error("Error fetching team members:", error);
       }
     }, [teamId]);
 
@@ -76,7 +76,7 @@ const fetchTasks = useCallback(async () => {
     const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/tasks`);
     const data = await response.json();
     if (data.success) {
-      console.log("Fetched Tasks:", data.tasks);
+      //console.log("Fetched Tasks:", data.tasks);
       // Map tasks to ensure they have the required fields for Mobiscroll
       const formattedTasks = data.tasks.map(task => ({
         id: task._id,
@@ -91,7 +91,7 @@ const fetchTasks = useCallback(async () => {
       setMyEvents(formattedTasks);
     }
   } catch (error) {
-    console.error("Error fetching tasks:", error);
+    //console.error("Error fetching tasks:", error);
   }
 }, [teamId]);
 

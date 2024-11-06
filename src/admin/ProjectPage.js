@@ -39,7 +39,7 @@ const [clicked, setclicked] = useState(false)
 
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching project:', error);
+        //console.error('Error fetching project:', error);
         setLoading(false);
       }
     };
@@ -78,7 +78,7 @@ const [clicked, setclicked] = useState(false)
         alert("Error creating team");
       }
     } catch (error) {
-      console.error("Error creating team:", error);
+      //console.error("Error creating team:", error);
     }
   };
 
@@ -106,8 +106,8 @@ const [clicked, setclicked] = useState(false)
 
       <h1>{project.projectName}</h1>
       <p>{project.description}</p>
-      {/* {showCreateNoticeForm && <CreateNotice projectId={projectId} teams={teams}/>}
-      <button className="create-team-btn" onClick={handleNotice}>Send Notice</button> */}
+      {showCreateNoticeForm && <CreateNotice projectId={projectId} teams={teams} userId={user.id}/>}
+      <button className="create-team-btn" onClick={handleNotice}>Send Notice</button>
 
       {/* Create Team Button */}
       <button

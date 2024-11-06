@@ -48,7 +48,7 @@ function App() {
           }
       } catch (error) {
         toast.error("Error fetching timeline")
-          console.error("Error fetching events:", error);
+          //console.error("Error fetching events:", error);
       }
   }, [teamId]);
 
@@ -116,7 +116,7 @@ function App() {
       } catch (error) {
         toast.error("Error saving timeline")
 
-          console.error("Error saving event:", error);
+          //console.error("Error saving event:", error);
       }
   }, [isEdit, popupEventDate, popupEventProgress, popupEventResource, popupEventTitle, popupEventDescription, tempEvent, teamId]);
 

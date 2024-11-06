@@ -39,7 +39,7 @@ export default function Dashboard({ team, tasks }) {
         }
       } catch (error) {
         toast.error('Error fetching notices')
-        console.error("Error fetching notices:", error);
+        //console.error("Error fetching notices:", error);
       }
     };
     fetchNotices();
@@ -57,7 +57,7 @@ export default function Dashboard({ team, tasks }) {
         alert("Failed to fetch activity logs.");
       }
     } catch (error) {
-      console.error("Error fetching activity logs:", error);
+      //console.error("Error fetching activity logs:", error);
       toast.error("An error occurred while fetching activity logs.");
     }
   };
@@ -78,7 +78,7 @@ export default function Dashboard({ team, tasks }) {
       }
     } catch (error) {
       toast.error('Error fetching timelines')
-      console.error("Error fetching events:", error);
+      //console.error("Error fetching events:", error);
     }
   }, [team]);
 

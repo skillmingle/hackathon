@@ -25,7 +25,7 @@ const TeamDashboard = () => {
         setTasks(data.tasks);
       }
     } catch (error) {
-      console.error("Error fetching tasks:", error);
+      //console.error("Error fetching tasks:", error);
     }
   };
 
@@ -51,7 +51,7 @@ const TeamDashboard = () => {
         }
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching team:', error);
+        //console.error('Error fetching team:', error);
         setLoading(false);
       }
     };
@@ -76,10 +76,10 @@ const TeamDashboard = () => {
         setTeam(data.team); // Update the team with the new member
         setNewMemberEmail(""); // Clear the input field
       } else {
-        console.error('Error adding team member:', data.message);
+        //console.error('Error adding team member:', data.message);
       }
     } catch (error) {
-      console.error('Error adding team member:', error);
+      //console.error('Error adding team member:', error);
     }
   };
 

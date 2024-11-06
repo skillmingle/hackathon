@@ -42,7 +42,7 @@ const [spinner, setspinner] = useState(false)
 
 
   useEffect(() => {
-    // console.log(component)
+    // //console.log(component)
     if(component=='dashboard'){
       setActiveKey("1")
     }else if(component=='files'){
@@ -70,7 +70,7 @@ const [spinner, setspinner] = useState(false)
       }
     } catch (error) {
       toast.error("Error fetching tasks")
-      console.error("Error fetching tasks:", error);
+      //console.error("Error fetching tasks:", error);
     }
   };
 
@@ -97,7 +97,7 @@ const [spinner, setspinner] = useState(false)
         setLoading(false);
       } catch (error) {
         toast.error("Error fetching team")
-        console.error('Error fetching team:', error);
+        //console.error('Error fetching team:', error);
         setLoading(false);
       }
     };

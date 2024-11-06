@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./css/CreateNotice.css";
 
-const CreateNotice = ({projectId, teams }) => {
+const CreateNotice = ({projectId, teams, userId }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedTeams, setSelectedTeams] = useState([]);
@@ -26,6 +26,7 @@ const CreateNotice = ({projectId, teams }) => {
         selectedTeams,
         projectId,
         sendToAll,
+        userId
       });
 
       if (response.data.success) {
@@ -36,7 +37,7 @@ const CreateNotice = ({projectId, teams }) => {
         setSendToAll(false);
       }
     } catch (error) {
-      console.error("Error creating notice:", error);
+      //console.error("Error creating notice:", error);
       alert("Failed to create notice.");
     }
   };

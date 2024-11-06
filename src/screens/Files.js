@@ -34,7 +34,7 @@ function DriveUploader() {
           alert("Failed to fetch access token.");
         }
       } catch (error) {
-        console.error("Error fetching access token:", error);
+        //console.error("Error fetching access token:", error);
         toast.error("An error occurred while fetching the access token.");
       }
     };
@@ -59,7 +59,7 @@ function DriveUploader() {
       setspinner(false)
       setFiles(data.files || []);
     } catch (error) {
-      console.error('Error fetching files:', error);
+      //console.error('Error fetching files:', error);
       toast.error('Failed to load files.');
     }
   }, [accessToken]);
@@ -101,7 +101,7 @@ function DriveUploader() {
         toast.error('Failed to delete file.');
       }
     } catch (error) {
-      console.error('Error deleting file:', error);
+      //console.error('Error deleting file:', error);
       toast.error('An error occurred while deleting the file.');
     }
   };
@@ -185,7 +185,7 @@ function DriveUploader() {
         toast.error('Failed to upload file.');
       }
     } catch (error) {
-      console.error('Error uploading file:', error);
+      //console.error('Error uploading file:', error);
       toast.error('An error occurred during file upload.');
     }
   };

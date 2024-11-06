@@ -30,7 +30,7 @@ const ActivityLog = ({ teamId }) => {
     } catch (error) {
       setspinner(false)
 
-      console.error("Error fetching activity logs:", error);
+      //console.error("Error fetching activity logs:", error);
       toast.error("An error occurred while fetching activity logs.");
     }
   };
