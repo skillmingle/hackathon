@@ -220,15 +220,7 @@ export default function Dashboard({ team, tasks }) {
               </span>}
             </div>
 
-            <div className="notice-list">
-              {notices.map((notice, index) => (
-                <div key={index} className="notice-item">
-                  <h3 className="notice-title">{notice.title}</h3>
-                  <p className="notice-date">{new Date(notice.date).toLocaleString()}</p>
-                  <p className="notice-description">{notice.description}</p>
-                </div>
-              ))}
-            </div>
+
           </div>
 
           <div className="container text-center">
