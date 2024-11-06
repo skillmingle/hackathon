@@ -2,11 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 import CreateProjectForm from "../Components/CreateProjectModal"; // Renamed from CreateProjectModal to reflect that it's no longer a modal
 import "./css/Dashboard&projectmodal.css";
 import ContextApi from "../ContextAPI/ContextApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 // import Sidebar from './Sidebar'; // Import Sidebar component
 
 const AdminH2HDashboard = () => {
   const [showForm, setShowForm] = useState(false);
+
+  const location = useLocation();
+  const id = location.state;
 
   const { user } = useContext(ContextApi); // Get the logged-in user
   const userId = user.id;
@@ -15,15 +18,14 @@ const AdminH2HDashboard = () => {
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const navigate = useNavigate();
 
-  const [currentTeam, setCurrentTeam] = useState(null);
 
   useEffect(() => {
-    if (user.email == "sachin@gmail.com" || user.email == "sahil@gmail.com") {
+    if (id == "sachin@gmail.com" || id == "sahil@gmail.com") {
       setisAuthenticated(true);
     }else{
       navigate('/')
     }
-  }, [user]);
+  }, [id]);
 
   // Fetch projects for the logged-in user
   useEffect(() => {

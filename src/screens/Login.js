@@ -34,7 +34,7 @@ const Login = () => {
         //console.log(data);
         setuser(data.user);
         if(data.user.email=='sachin@gmail.com'||data.user.email=='sahil@gmail.com'){
-          navigate("/AdminH2HDashboard",);
+          navigate("/AdminH2HDashboard", { state: data.user.email });
 
         }else{
           navigate('/Team/Dashboard');
