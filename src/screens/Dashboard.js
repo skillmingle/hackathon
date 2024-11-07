@@ -325,7 +325,7 @@ export default function Dashboard({ team, tasks }) {
           <br/>
           <div className="notice-board">
             <h2 className="notice-board-title">Team Metrics</h2>
-            {teamHealthScore && teamProgress && teamTaskCounts && <div className="notice-list">
+            { <div className="notice-list">
               <div className="metrics-item text-center">
                 {teamHealthScore && (
                   <ReactSpeedometer
