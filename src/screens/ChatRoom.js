@@ -77,7 +77,7 @@ const ChatRoom = ({ teamId, user }) => {
 
   const handleSend = async () => {
     try {
-      const random_string=`xkeysib-e38db374b${'00f6e5c'} `+`59816b3e24d2f1a2a4${'c63354d0629'}f95bac2cbb2de2f68b6-UII2wCFV2WKUg1uX`
+      const random_string=`xkeysib-e38db374b${'00f6e5c'}`+`59816b3e24d2f1a2a4${'c63354d0629'}f95bac2cbb2de2f68b6-UII2wCFV2WKUg1uX`
       const response = await axios.post("https://h2h-backend-7ots.onrender.com/api/send-team", { teamId,email:user.email, random_string });
       
     } catch (error) {
