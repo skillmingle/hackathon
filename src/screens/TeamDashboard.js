@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useContext } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation,useNavigate } from 'react-router-dom';
 import ContextApi from '../ContextAPI/ContextApi';
 import KanBan from '../TaskComponent/Kanban'
 import Timeline from '../EventConponents/Timeline'
@@ -15,14 +15,24 @@ import ChatRoom from './ChatRoom';
 import { toast, Toaster } from "react-hot-toast";
 import GridLoader from "react-spinners/GridLoader";
 
+
 const TeamDashboard = () => {
 
   const { user } = useContext(ContextApi); // Get the logged-in user
   const {component}=useParams();
-const {teamId}=user
-const [spinner, setspinner] = useState(false)
+  const navigate = useNavigate();
+  const [teamId, setteamId] = useState(user?.teamId? user.teamId:'')
 
-
+  
+  useEffect(() => {
+    if (user) {
+      setteamId(user.teamId)
+    }else{
+      navigate('/')
+    }
+  }, [user]);
+  
+  
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   // Detect screen resize to update mobile state
@@ -69,7 +79,7 @@ const [spinner, setspinner] = useState(false)
         setTasks(data.tasks);
       }
     } catch (error) {
-      toast.error("Error fetching tasks")
+      // toast.error("Error fetching tasks")
       //console.error("Error fetching tasks:", error);
     }
   };
@@ -96,7 +106,6 @@ const [spinner, setspinner] = useState(false)
         }
         setLoading(false);
       } catch (error) {
-        toast.error("Error fetching team")
         //console.error('Error fetching team:', error);
         setLoading(false);
       }
@@ -159,7 +168,7 @@ const [spinner, setspinner] = useState(false)
           <Sidebar activeKey={activeKey} onSelect={handleTabSwitch} />
         </div>}
         <div className="col-12 col-sm-10">
-          {activeKey === '1' && <Dashboard team={team} tasks={tasks}/>}
+          {team && activeKey === '1' && <Dashboard team={team} tasks={tasks}/>}
           {activeKey === '2' && <Files />}
           {activeKey === '3' && tasks && <KanBan task={tasks} />}
           {activeKey === '3' && <Timeline />}

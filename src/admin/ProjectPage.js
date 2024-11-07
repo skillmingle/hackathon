@@ -96,6 +96,7 @@ const [clicked, setclicked] = useState(false)
     const u= { id: user.id, name: user.name, email: user.email, teamId: team}
     localStorage.setItem('userData', JSON.stringify(u));
     navigate('/Team/Dashboard');
+    window.location.reload();
 
   }
 

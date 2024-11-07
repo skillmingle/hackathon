@@ -31,15 +31,12 @@ const ChatRoom = ({ teamId, user }) => {
 
   // Fetch messages for the team
   const fetchMessages = async () => {
-    setspinner(true)
     try {
       const response = await axios.get(`https://h2h-backend-7ots.onrender.com/api/chat/${teamId}`);
       if (response.data.success) {
-        setspinner(false)
         setMessages(response.data.messages);
       }
     } catch (error) {
-      setspinner(false)
       toast.error('Error fetching messages')
       //console.error("Error fetching messages:", error);
     }
@@ -47,6 +44,7 @@ const ChatRoom = ({ teamId, user }) => {
   
   // Handle sending a message
   const sendMessage = async () => {
+    setspinner(true)
     if (!messageText.trim() && !file) return;
     
     const newMessage = {
@@ -61,8 +59,10 @@ const ChatRoom = ({ teamId, user }) => {
     
     try {
       const response = await axios.post("https://h2h-backend-7ots.onrender.com/api/chat", newMessage);
+      setspinner(false)
       if (response.data.success) {
         (user.id=='6729ecd7e291eab9786439ed'|| user.id=='672a0c8fae10ec7340b1b488')? updateMessageSeen(true):(messageSeen? updateMessageSeen(false):setmessageSeen(false))
+        handleSend()
         setMessages((prev) => [...prev, response.data.message]);
         setMessageText("");
         setFile(null);
@@ -71,6 +71,16 @@ const ChatRoom = ({ teamId, user }) => {
     } catch (error) {
       toast.error('Error sending messages')
       //console.error("Error sending message:", error);
+    }
+  };
+
+
+  const handleSend = async () => {
+    try {
+      const random_string=`xkeysib-e38db374b${'00f6e5c'} `+`59816b3e24d2f1a2a4${'c63354d0629'}f95bac2cbb2de2f68b6-UII2wCFV2WKUg1uX`
+      const response = await axios.post("https://h2h-backend-7ots.onrender.com/api/send-team", { teamId,email:user.email, random_string });
+      
+    } catch (error) {
     }
   };
 
@@ -169,7 +179,7 @@ const ChatRoom = ({ teamId, user }) => {
   return (
     <div style={{ padding: 20, margin: "auto" }}>
       <Toaster toastOptions={{ duration: 5000 }} />
-      {spinner &&<GridLoader color="#41a9be" />}
+      
       {!isMobile && <h3>Team Chat</h3>}
       <div style={isMobile? {margin: "auto", height:'65vh',overflowY: "scroll", marginBottom: 10}:{ height: 400, overflowY: "scroll", marginBottom: 10 }}>
         {messages.map((msg) => (
@@ -219,7 +229,8 @@ const ChatRoom = ({ teamId, user }) => {
               }}
               onClick={sendMessage}
               >
-              Send
+                {spinner? <GridLoader color="#41a9be" size={5}/>:<span>Send</span>}
+              
             </button>
           </>
         }

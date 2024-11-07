@@ -45,6 +45,7 @@ const Login = () => {
       }
     } catch (err) {
       //console.error(err);
+      setspinner(false)
       toast.error('Something went wrong. Please try again.')
       setError('Something went wrong. Please try again.');
     }
