@@ -212,7 +212,7 @@ function App() {
     async (event) => {
       setspinner(true)
       try {
-        await fetch(`http://localhost:5000/api/timeline2/${event._id}`, {
+        await fetch(`https://h2h-backend-7ots.onrender.com/api/timeline2/${event._id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json"
