@@ -18,7 +18,7 @@ function DriveUploader({team}) {
   const [file, setFile] = useState(null);
   const [accessToken, setAccessToken] = useState("");
   const [spinner, setspinner] = useState(false)
-
+  const [isuploading, setisuploading] = useState(false)
   const { user } = useContext(ContextApi); // Get the logged-in user
     const {name,teamId,id} = user
 
@@ -144,6 +144,8 @@ function DriveUploader({team}) {
       return;
     }
 
+    setisuploading(true)
+
     const metadata = {
       name: file.name,
       mimeType: file.type,
@@ -160,6 +162,8 @@ function DriveUploader({team}) {
         headers: new Headers({ Authorization: `Bearer ${accessToken}` }),
         body: form,
       });
+
+      setisuploading(false)
       if (response.ok) {
         
         // Log upload activity
@@ -184,6 +188,7 @@ function DriveUploader({team}) {
         toast.error('Failed to upload file.');
       }
     } catch (error) {
+      setisuploading(false)
       //console.error('Error uploading file:', error);
       toast.error('An error occurred during file upload.');
     }
@@ -199,7 +204,7 @@ function DriveUploader({team}) {
           <div className="upload-container text-center" style={{ marginBottom: '20px' }}>
             <h3 className="upload-title">Upload Your Files</h3>
             <input className="custom-uploader" type="file" onChange={handleFileChange} />
-            <Button style={{ border: '1px solid grey', marginLeft: '10px' }} onClick={handleUpload}>Upload File</Button>
+            {isuploading? <GridLoader color="#41a9be" size={5}/>:<Button style={{ border: '1px solid grey', marginLeft: '10px' }} onClick={handleUpload}>Upload File</Button>}
           </div>
 
           <div className="file-gallery">

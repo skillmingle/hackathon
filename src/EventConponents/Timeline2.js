@@ -4,6 +4,7 @@ import {
   Input,
   Popup,
   Textarea,
+  Button,
   setOptions,
 } from '@mobiscroll/react';
 import { useCallback, useMemo, useRef, useState, useEffect, useContext } from 'react';
@@ -32,6 +33,7 @@ function App() {
   const [popupEventProgress, setProgress] = useState(0);
   const [popupEventDescription, setDescription] = useState('');  // New state for description
   const [spinner, setspinner] = useState(false)
+  const [isOpen, setOpen] = useState(false);
 
   const { user } = useContext(ContextApi); // Get the logged-in user
   const { name, teamId, id } = user;
@@ -100,12 +102,14 @@ function App() {
               setMyEvents((events) => events.map((evt) => (evt._id === tempEvent._id ? { ...evt, ...event } : evt)));
           } else {
             toast.loading("Creating timeline")
+            setspinner(true)
               const response = await fetch(`https://h2h-backend-7ots.onrender.com/api/teams/${teamId}/timelines`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(event),
               });
               const data = await response.json();
+              setspinner(false)
               if (data.success) {
                   setMyEvents((events) => [...events, data.timeline]);
                   toast.success("Timeline created")
@@ -203,10 +207,54 @@ function App() {
       []
   );
 
+  
+  const deleteEvent = useCallback(
+    async (event) => {
+      setspinner(true)
+      try {
+        await fetch(`http://localhost:5000/api/timeline2/${event._id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+          },        
+          body: JSON.stringify({
+            teamId:teamId,
+            id:id,
+            name:name,
+          }),
+        });
+        setMyEvents(myEvents.filter((item) => item.id !== event.id));
+        setspinner(false)
+        toast.success("Event Deleted")
+      } catch (error) {
+        setspinner(false)
+        toast.error("Failed to delete event")
+        //console.error("Error deleting event:", error);
+      }
+    },
+    [myEvents]
+  );
+
+  const onDeleteClick = useCallback(() => {
+    deleteEvent(tempEvent);
+    setPopupOpen(false);
+  }, [deleteEvent, tempEvent]);
+
+
+  const onEventDeleted = useCallback(
+    (args) => {
+      deleteEvent(args.event);
+    },
+    [deleteEvent],
+  );
+
+
+
+
   return (
       <div style={{ marginBottom: '100px' }}>
-        {spinner &&<GridLoader color="#41a9be"/>}
-        <Toaster toastOptions={{ duration: 4000 }} />
+              <div className='text-center'><span>{spinner &&<GridLoader color="#41a9be" size={12}/>}</span></div>
+        <Toaster toastOptions={{ duration: 2000 }} />
           <Eventcalendar
               class="mds-progress-calendar custom-calendar"
               view={myView}
@@ -218,6 +266,8 @@ function App() {
               onEventClick={handleEventClick}
               onEventCreated={handleEventCreated}
               renderScheduleEvent={renderCustomEvent}
+              onEventDeleted={onEventDeleted}
+
           />
           <Popup
               display="bottom"
@@ -287,8 +337,15 @@ function App() {
                       />
                       <span className="mds-popup-progress-label">{popupEventProgress}%</span>
                   </label>
+                  {isEdit ? (
+            <div className="mbsc-button-group">
+              <Button className="mbsc-button-block" color="danger" variant="outline" onClick={onDeleteClick}>
+                Delete event
+              </Button>
+            </div>
+          ) : null}
               </div>
-              {spinner &&<GridLoader color="#41a9be" size={8}/>}
+              <div className='text-center'><span>{spinner &&<GridLoader color="#41a9be" size={8}/>}</span></div>
           </Popup>
       </div>
   );

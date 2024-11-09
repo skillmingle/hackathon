@@ -456,8 +456,9 @@ function App() {
               </Button>
             </div>
           ) : null}
+          <div className='text-center'><span>{spinner &&<GridLoader color="#41a9be" size={8}/>}</span></div>
+
         </div>
-        {spinner &&<GridLoader color="#41a9be" size={8}/>}
 
       </Popup>
       <Popup
@@ -499,7 +500,7 @@ function App() {
             ) : null,
           )}
         </div>
-        {spinner &&<GridLoader color="#41a9be" size={8}/>}
+        <div className='text-center'><span>{spinner &&<GridLoader color="#41a9be" size={8}/>}</span></div>
       </Popup>
       <Snackbar isOpen={isSnackbarOpen} message="Event deleted" button={snackbarButton} onClose={handleSnackbarClose} />
     </>
