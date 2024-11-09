@@ -12,9 +12,8 @@ import '../css/Files.css';
 import leftIcon from "../images/h2h logo.jpg"; // Replace with your left icon image path
 
 const CLIENT_ID = '339348172585-mucddr9ktvagcqamk6khtl1oliradje1.apps.googleusercontent.com';
-const FOLDER_ID = '1Ov-3DVzoXkA6Ue6NtC9AnA5zR5dpJMRT';
 
-function DriveUploader() {
+function DriveUploader({team}) {
   const [files, setFiles] = useState([]);
   const [file, setFile] = useState(null);
   const [accessToken, setAccessToken] = useState("");
@@ -48,7 +47,7 @@ function DriveUploader() {
     setspinner(true)
     try {
       const response = await fetch(
-        `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&fields=files(id,name,mimeType,modifiedTime,thumbnailLink,webViewLink,webContentLink)&key=${CLIENT_ID}`,
+        `https://www.googleapis.com/drive/v3/files?q='${team.driveFolderId}'+in+parents&fields=files(id,name,mimeType,modifiedTime,thumbnailLink,webViewLink,webContentLink)&key=${CLIENT_ID}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -148,7 +147,7 @@ function DriveUploader() {
     const metadata = {
       name: file.name,
       mimeType: file.type,
-      parents: [FOLDER_ID],
+      parents: [team.driveFolderId],
     };
 
     const form = new FormData();
@@ -242,10 +241,10 @@ function DriveUploader() {
   );
 }
 
-export default function App() {
+export default function App({team}) {
   return (
     <GoogleOAuthProvider clientId={CLIENT_ID}>
-      <DriveUploader />
+      <DriveUploader team={team} />
     </GoogleOAuthProvider>
   );
 }

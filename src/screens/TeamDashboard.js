@@ -169,7 +169,7 @@ const TeamDashboard = () => {
         </div>}
         <div className="col-12 col-sm-10">
           {team && activeKey === '1' && <Dashboard team={team} tasks={tasks}/>}
-          {activeKey === '2' && <Files />}
+          {activeKey === '2' && <Files team={team}/>}
           {activeKey === '3' && tasks && <KanBan task={tasks} />}
           {activeKey === '3' && <Timeline />}
           {activeKey === '4' && <Timeline2 />}
