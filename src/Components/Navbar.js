@@ -28,7 +28,7 @@ const Navbar = ({ teamName, activeKey }) => {
 
   return (
     <div className="navbar">
-      <span>{!isMobile? <img src={leftIcon} alt="Left Icon" className="navbar-icon left-icon" />:<img src={smIcon} alt="Left Icon" className="navbar-icon left-icon" />}<span style={tagStyle}>Beta 1.1</span></span>
+      <span>{!isMobile? <img src={leftIcon} alt="Left Icon" className="navbar-icon left-icon" />:<img src={smIcon} alt="Left Icon" className="navbar-icon left-icon" />}<span style={tagStyle}>Beta 2.0</span></span>
       <h1 className="navbar-title">{!isMobile && <span style={{color:'#3e98c7'}}>{teamName} { " | " }</span>} <span style={{color:'green'}}>{activeKey}</span></h1>
       {!isMobile && <img src={rightIcon} alt="Right Icon" className="navbar-icon right-icon" />}
     </div>
