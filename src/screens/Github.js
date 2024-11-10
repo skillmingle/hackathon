@@ -20,7 +20,7 @@ const Github = ({ teamId }) => {
   // Fetch GitHub data for the team
   const fetchGithubData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/team/${teamId}/github`);
+      const response = await axios.get(`https://h2h-backend-7ots.onrender.com/api/team/${teamId}/github`);
       if (response.data.success) {
         setGithubData(response.data.githubRepo);
         setUserName(response.data.githubRepo.userName || "");
@@ -37,7 +37,7 @@ const Github = ({ teamId }) => {
   const handleSave = async () => {
     setspinner(true)
     try {
-      const response = await axios.put(`http://localhost:5000/api/team/${teamId}/github`, {
+      const response = await axios.put(`https://h2h-backend-7ots.onrender.com/api/team/${teamId}/github`, {
         userName,
         repo,
         name,
