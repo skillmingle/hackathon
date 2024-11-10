@@ -1,0 +1,241 @@
+/*!
+ * GitHub Activity Stream - v0.1.4 - 10/7/2015
+ * https://github.com/caseyscarborough/github-activity
+ *
+ * Copyright (c) 2015 Casey Scarborough
+ * MIT License
+ * http://opensource.org/licenses/MIT
+ */
+ @import "./octicons/octicons.min.css";
+
+ .gha-feed {
+    width: 100%;
+    height: 100%;
+    background: var(--main-bg-col);
+    color: var(--gh-text-col);
+    font-weight: bold;
+    font-size: 14px;
+    font-family: Helvetica, arial, freesans, clean, sans-serif;
+    line-height: 1.3;
+    overflow-y: auto;
+    border: 1px solid var(--border-col);
+  }
+  
+  .gha-feed, .gha-feed h2, .gha-feed h3, .gha-feed p, .gha-feed ul, .gha-feed li {
+    margin: 0;
+    padding: 0;
+  }
+  .gha-feed ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .gha-feed li {
+    list-style-type: none;
+    line-height: 1.4;
+  }
+  
+  .gha-feed small {
+    color: var(--small-text-col);
+    font-weight: normal;
+    font-size: 13px;
+  }
+  
+  .gha-feed small a {
+    font-weight: normal;
+  }
+  
+  .gha-feed small a .more-commits { font-size: 11px; }
+  
+  span.gha-time {
+    color: var(--time-text-col);
+    font-weight: normal; 
+    font-size: 12px; 
+  }
+  
+  .gha-feed a {
+    color: var(--link-col);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .gha-feed a:hover {
+    text-decoration: underline;
+  }
+  
+  .gha-header {
+    position: absolute;
+    height: 67px;
+    width: calc(100% - 2px);
+    /* padding: 10px; */
+    border-bottom: 1px solid var(--border-col);
+    background: var(--main-bg-col); /* Old browsers */
+    background: -moz-linear-gradient(top,  var(--main-bg-col) 0%, var(--gradient-bg-col) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,var(--main-bg-col)), color-stop(100%,var(--gradient-bg-col))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  var(--main-bg-col) 0%,var(--gradient-bg-col) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  var(--main-bg-col) 0%,var(--gradient-bg-col) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  var(--main-bg-col) 0%,var(--gradient-bg-col) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  var(--main-bg-col) 0%,var(--gradient-bg-col) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--main-bg-col)', endColorstr='var(--gradient-bg-col)',GradientType=0 ); /* IE6-9 */
+  }
+  
+  .gha-footer {
+    position: absolute;
+    bottom: 0px;
+    padding: 5px;
+    border-top: 1px solid var(--border-col);
+    height: 16px;
+    width: 100%;
+    background: var(--main-bg-col); /* Old browsers */
+    background: -moz-linear-gradient(top,  var(--main-bg-col) 0%, var(--gradient-bg-col) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,var(--main-bg-col)), color-stop(100%,var(--gradient-bg-col))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  var(--main-bg-col) 0%,var(--gradient-bg-col) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  var(--main-bg-col) 0%,var(--gradient-bg-col) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  var(--main-bg-col) 0%,var(--gradient-bg-col) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  var(--main-bg-col) 0%,var(--gradient-bg-col) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--main-bg-col)', endColorstr='var(--gradient-bg-col)',GradientType=0 ); /* IE6-9 */
+    color: var(--gh-text-col);
+    font-size: 13px;
+    padding-left: 10px;
+  }
+  
+  .gha-footer a {
+    float: right;
+    color: var(--gh-text-col);
+    margin-right: 10px;
+    font-size: 13px;
+    font-weight: bold;
+  }
+  
+  .gha-footer a:hover { text-decoration: none; }
+  .gha-header a:hover { text-decoration: none; }
+  
+  .gha-github-icon {
+    display: inline;
+    float: left;
+    margin: 10px 10px;
+    /* padding: 10px 10px 0; */
+    /* margin-right: 5px; */
+    /* width: 35px;
+    height: 35px; */
+    color: var(--gh-text-col);
+  }
+  
+  .gha-github-icon .octicon {
+    font: normal normal 40px octicons;
+  }
+  
+  .gha-gravatar {
+    display: inline;
+    float: right;
+    margin-right: 15px;
+    height: 60px;
+    width: 60px;
+  }
+  
+  .gha-gravatar img {
+    padding: 3px;
+    width: 100%;
+  }
+  
+  .gha-activity {
+    clear: both;
+    padding: 10px 0;
+    width: 100%;
+    border-bottom: 1px solid var(--border-col);
+  }
+  
+  
+  .gha-activity.gha-small {
+    font-weight: normal;
+    font-size: 13px;
+  }
+  
+  .gha-activity.gha-small a {
+    font-weight: normal;
+  }
+  
+  .gha-activity.gha-small span {
+    font-size: 16px;
+  }
+  
+  .gha-activity:last-child {
+    padding-bottom: 100px;
+  }
+  
+  .gha-repo {
+    clear: both;
+    padding: 10px 0;
+    width: 100%;
+    border-bottom: 1px solid var(--border-col);
+  }
+  
+  .gha-activity-icon .octicon {
+    display: inline;
+    float: left;
+    clear: both;
+    margin: 6px auto;
+    width: 50px;
+    color: var(--time-text-col);
+    text-align: center;
+    font: normal normal 30px octicons;
+  }
+  
+  .gha-activity-icon .gha-small {
+    font-size: 16px;
+  }
+  
+  .gha-message {
+    display: inline-block;
+    float: left;
+    width: calc(100% - 60px);
+  }
+  
+  .gha-message-commits { font-size: 11px; }
+  
+  .gha-sha {
+    font-size: 12px;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+  }
+  
+  .gha-gravatar-small {
+    float: left;
+    margin-right: 6px;
+    width: 30px;
+  }
+  
+  .gha-gravatar-commit {
+    margin-bottom: -3px;
+    border-radius: 2px;
+  }
+  
+  .gha-gravatar-user { float: left; }
+  
+  .gha-user-info {
+    display: inline-block;
+    float: left;
+    margin: 0 auto;
+    padding: 6px 10px 5px;
+    color: var(--gh-text-col);
+    font-size: 20px;
+  }
+  
+  .gha-user-info a { color: var(--gh-text-col); }
+  .gha-user-info p a { font-weight: 100; }
+  
+  .gha-without-name {
+    padding-top: 20px;
+    padding-left: 15px;
+  }
+  
+  .gha-time {
+    color: var(--time-text-col);
+    font-weight: normal; 
+    font-size: 12px; 
+  }
+  
+  .gha-clear { clear: both; }
+  .gha-muted { color: var(--small-text-col); }
+  .gha-push  { height: 67px; }
+  .gha-push-small  { height: 26px; }

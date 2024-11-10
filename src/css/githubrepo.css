@@ -1,0 +1,90 @@
+/* GithubRepo.css */
+
+.github-container {
+    /* max-width: 600px; */
+    /* margin: 20px auto; */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+    /* text-align: center; */
+  }
+  
+  .github-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+  
+  .github-info {
+    font-size: 1rem;
+    color: #495057;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .github-info p {
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .button {
+    /* display: inline-block; */
+    /* margin-top: 10px; */
+    padding: 4px 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  .edit-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .edit-section label {
+    font-size: 0.9rem;
+    color: #495057;
+    margin-bottom: 5px;
+  }
+  
+  .edit-section input {
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  .center-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* height: 50vh; */
+  }
+  
+  button.cancel-button {
+    background-color: #6c757d;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  button.cancel-button:hover {
+    background-color: #5a6268;
+  }
+  

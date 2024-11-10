@@ -8,7 +8,7 @@ import CalendarIcon from '@rsuite/icons/Calendar';
 import TimeIcon from '@rsuite/icons/Time';
 import PageIcon from '@rsuite/icons/Page';
 import WechatIcon from '@rsuite/icons/Wechat';
-
+import CodeIcon from '@rsuite/icons/Code';
 import '../css/Sidebar.css'
 
 const Sidebar = ({ activeKey, onSelect }) => {
@@ -37,6 +37,7 @@ const Sidebar = ({ activeKey, onSelect }) => {
             <Nav.Item eventKey="5" icon={<CalendarIcon />} ></Nav.Item>
             <Nav.Item eventKey="6" icon={<WechatIcon />} ></Nav.Item>
             <Nav.Item eventKey="7" icon={<PageIcon />} ></Nav.Item>
+            <Nav.Item eventKey="8" icon={<CodeIcon />} ></Nav.Item>
           </Nav>
         </div>
       ) : (
@@ -54,6 +55,7 @@ const Sidebar = ({ activeKey, onSelect }) => {
               <Nav.Item eventKey="5" icon={<CalendarIcon />}>Event Calendar</Nav.Item>
               <Nav.Item eventKey="6" icon={<WechatIcon />}>Chat Room</Nav.Item>
               <Nav.Item eventKey="7" icon={<PageIcon />}>Activity Logs</Nav.Item>
+              <Nav.Item eventKey="8" icon={<CodeIcon />}>Github</Nav.Item>
             </Nav>
           </Sidenav.Body>
           <Sidenav.Toggle onToggle={(expanded) => setExpanded(expanded)} />

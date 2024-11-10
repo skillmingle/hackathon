@@ -6,17 +6,17 @@
 @import "rsuite/dist/rsuite.css";
 
 
-.Overlay {
-  backdrop-filter: blur(2px); /* Adjust the blur radius as needed */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity:1;
-  /* background-color: black; */
-}
+@import "./base.css";
 
+.gha-feed {
+  --main-bg-col: #fff;
+  --gradient-bg-col: #f4f4f4;
+  --border-col: #ddd;
+  --small-text-col: #666;
+  --time-text-col: #bbb;
+  --link-col: #4183c4;
+  --gh-text-col: #495961;
+}
 
 .doughnut-chart-container {
   width: 200px; /* Set your desired width */

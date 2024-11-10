@@ -10,6 +10,8 @@ import TeamDashboard from "./admin/TeamDashboard";
 import './App.css';
 import ChatRoom from "./screens/ChatRoom";
 
+import Github from './screens/Github'
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
               <Route exact path="/" element={<Login />} />
               <Route exact path="/Team/:component" key={window.location.pathname} element={<Dashboard />} />
               <Route exact path="/ChatRoom" element={<ChatRoom />} />
+              <Route exact path="/git" element={<Github />} />
 
               <Route exact path="/AdminH2HDashboard" element={<AdminH2HDashboard />} />
               <Route exact path="/projects/:projectId" element={<ProjectPage />} />

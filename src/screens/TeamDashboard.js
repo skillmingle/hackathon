@@ -14,6 +14,7 @@ import ActivityLog from './ActivityLog';
 import ChatRoom from './ChatRoom';
 import { toast, Toaster } from "react-hot-toast";
 import GridLoader from "react-spinners/GridLoader";
+import Github from './Github';
 
 
 const TeamDashboard = () => {
@@ -67,6 +68,8 @@ const TeamDashboard = () => {
       setActiveKey("6")
     }else if(component=='activity-logs'){
       setActiveKey("7")
+    }else if(component=='github'){
+      setActiveKey("8")
     }
     
   }, [component])
@@ -144,8 +147,11 @@ const TeamDashboard = () => {
       case '6':
         newStatus = "Chat Room";
         break;
-      default:
+      case '6':
         newStatus = "Activity Logs";
+        break;
+      default:
+        newStatus = "Github";
         break;
     }
     const url = `${window.location.origin}/Team/${newStatus.toLowerCase().replace(" ", "-")}`;
@@ -176,6 +182,8 @@ const TeamDashboard = () => {
           {activeKey === '5' && <EventBoard />}
           {activeKey === '6' && <ChatRoom teamId={user.teamId} user={user}/>}
           {activeKey === '7' && <ActivityLog teamId={user.teamId}/>}
+          {activeKey === '8' && <Github teamId={user.teamId}/>}          
+
         </div>
       </div>
     </div>
