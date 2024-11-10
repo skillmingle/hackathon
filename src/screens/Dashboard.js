@@ -35,15 +35,18 @@ export default function Dashboard({ team, tasks }) {
       try {
         const response = await axios.get(`https://h2h-backend-7ots.onrender.com/api/teams/${team._id}/notices`);
         if (response.data.success) {
-          setNotices(response.data.notices);
+          // Sort notices by date in descending order
+          const sortedNotices = response.data.notices.sort((a, b) => new Date(b.date) - new Date(a.date));
+          setNotices(sortedNotices);
         }
       } catch (error) {
-        toast.error('Error fetching notices')
+        toast.error('Error fetching notices');
         //console.error("Error fetching notices:", error);
       }
     };
     fetchNotices();
   }, [team]);
+  
 
   const fetchActivityLogs = async () => {
     try {
