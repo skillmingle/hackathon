@@ -65,7 +65,7 @@ const Github = ({ teamId }) => {
   return (
     <div className={`github-container ${!githubData ? "center-content" : ""}`}>
       <Toaster toastOptions={{ duration: 4000 }} />
-      <h3 className="github-header">GitHub Repository Activiy</h3>
+      <h3 className="github-header">GitHub Repository Activity</h3>
       {githubData && githubData.userName && githubData.repo ? (
         <div className="github-info">
           <p>
